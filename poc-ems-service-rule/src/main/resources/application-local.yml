@@ -1,0 +1,48 @@
+# Server settings (ServerProperties)
+server:
+  port: 9014
+
+# Spring specifics 
+
+spring:
+  application:
+    name: rule-engine-service
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/emsv2?createDatabaseIfNotExist=true
+    username: sa
+    password: Welcome1
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/test
+      
+# Eureka specifics 
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+      
+# Ribbon specifics 
+
+ribbon:
+  eureka:
+   enabled: true
+
+# Local Proxy
+local: 
+  proxy:
+    https:
+      host: proxy.wdf.sap.corp
+      port: 8080
+    http: 
+      host: proxy.wdf.sap.corp
+      port: 8080
+  

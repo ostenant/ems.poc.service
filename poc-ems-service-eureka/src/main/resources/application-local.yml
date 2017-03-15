@@ -1,0 +1,28 @@
+# Server settings (ServerProperties)
+server:
+  port: 8761
+
+# Spring specifics 
+
+spring:
+  application:
+    name: EMS-SERVICE-EUREKA
+    
+# Eureka specifics 
+    
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+# Turbine specifics 
+
+turbine:
+  aggregator:
+    clusterConfig: admin-service,audit-service,rule-engine-service,erp-integration,job-service
+  appConfig: admin-service,audit-service,rule-engine-service,erp-integration,job-service
+  clusterNameExpression: metadata['cluster']

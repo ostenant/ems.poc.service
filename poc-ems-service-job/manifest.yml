@@ -1,0 +1,8 @@
+---
+applications:
+- name: ems-v2-service-job
+  memory: 1G
+  host: ems-v2-service-job
+  services:
+  - ems-v2-eureka-service
+  - ems-v2-hana-db

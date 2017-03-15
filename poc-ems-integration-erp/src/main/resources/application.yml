@@ -1,0 +1,38 @@
+# Spring specifics 
+
+spring:
+  application:
+    name: erp-integration
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+
+# Eureka specifics 
+
+eureka:
+  client:
+    fetchRegistry: true
+    register-with-eureka: true
+    serviceUrl:
+      defaultZone: ${vcap.services.ems-v2-eureka-service.credentials.uri}/eureka/
+  instance:
+    hostname: ${vcap.application.uris[0]}
+    metadataMap:
+      instanceId: ${vcap.application.instance_id}
+    metadata-map:
+      cluster: erp-integration
+    status-page-url: https://${vcap.application.uris[0]}${management.context-path:}/health
+    non-secure-port-enabled: false
+    secure-port-enabled: true
+
+# Hystrix specifics 
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 6000

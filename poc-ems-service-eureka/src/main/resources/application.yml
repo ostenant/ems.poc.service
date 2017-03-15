@@ -1,0 +1,27 @@
+# Spring specifics 
+
+spring:
+  application:
+    name: EMS-SERVICE-EUREKA
+
+# Eureka specifics 
+
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+  instance:
+    hostname: ${vcap.application.uris[0]}
+    metadataMap:
+      instanceId: ${vcap.application.instance_id}
+    status-page-url: https://${vcap.application.uris[0]}${management.context-path:}/health
+    non-secure-port-enabled: false
+    secure-port-enabled: true
+
+# Turbine specifics 
+
+turbine:
+  aggregator:
+    clusterConfig: admin-service,audit-service,rule-engine-service,erp-integration,job-service
+  appConfig: admin-service,audit-service,rule-engine-service,erp-integration,job-service
+  clusterNameExpression: metadata['cluster']

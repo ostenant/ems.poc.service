@@ -1,0 +1,7 @@
+---
+applications:
+- name: ems-v2-ui-admin
+  memory: 1G
+  host: ems-v2-ui-admin
+  services:
+  - ems-v2-eureka-service

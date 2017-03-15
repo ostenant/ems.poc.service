@@ -1,0 +1,9 @@
+# Server settings (ServerProperties)
+server:
+  port: 9000
+
+# Spring specifics 
+
+spring:
+  jpa:
+    show-sql: true

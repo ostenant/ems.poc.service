@@ -1,0 +1,34 @@
+# Spring specifics 
+
+spring:
+  application:
+    name: audit-service
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+
+# Eureka specifics
+
+eureka:
+  client:
+    fetchRegistry: true
+    register-with-eureka: true
+    serviceUrl:
+      defaultZone: ${vcap.services.ems-v2-eureka-service.credentials.uri}/eureka/
+  instance:
+    hostname: ${vcap.application.uris[0]}
+    metadataMap:
+      instanceId: ${vcap.application.instance_id}
+    metadata-map:
+      cluster: audit-service
+    status-page-url: https://${vcap.application.uris[0]}${management.context-path:}/health
+    non-secure-port-enabled: false
+    secure-port-enabled: true
+
+# Ribbon specifics 
+
+ribbon:
+  eureka:
+    enabled: true

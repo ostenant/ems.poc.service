@@ -1,0 +1,9 @@
+---
+applications:
+- name: ems-v2-service-user
+  memory: 1G
+  host: ems-v2-service-user
+  path: target/poc-user-service-2.0.0-SNAPSHOT.jar
+  services:
+  - ems-v2-eureka-service
+  - ems-v2-hana-db

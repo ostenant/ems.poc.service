@@ -1,0 +1,11 @@
+name: ems_ui
+tasks:
+  - name: prebuild
+    command:
+      - echo "Skip Prebuild"
+  - name: build
+    command:
+      - mvn clean -V -B package    
+  - name: postbuild
+    command:
+      - echo "Skip Post Build"

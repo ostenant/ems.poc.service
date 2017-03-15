@@ -1,0 +1,6 @@
+---
+applications:
+- name: ems-v2-service-eureka
+  memory: 500M
+  host: ems-v2-service-eureka
+  path: target/poc-ems-service-eureka-2.0.0-SNAPSHOT.jar

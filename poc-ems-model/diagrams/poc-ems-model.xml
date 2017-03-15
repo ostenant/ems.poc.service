@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><entities>
+	<entity>
+		<entity-name>com.sap.csc.poc.ems.model.jpa.entitlement.EntitlementType</entity-name>
+		<entity-width>128</entity-width>
+		<entity-height>128</entity-height>
+		<entity-X-Coordinate>573</entity-X-Coordinate>
+		<entity-Y-Coordinate>490</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.sap.csc.poc.ems.model.jpa.entitlement.EntitlementItem</entity-name>
+		<entity-width>152</entity-width>
+		<entity-height>108</entity-height>
+		<entity-X-Coordinate>760</entity-X-Coordinate>
+		<entity-Y-Coordinate>566</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.sap.csc.poc.ems.model.jpa.entitlement.EntitlementAttribute</entity-name>
+		<entity-width>192</entity-width>
+		<entity-height>148</entity-height>
+		<entity-X-Coordinate>530</entity-X-Coordinate>
+		<entity-Y-Coordinate>260</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.sap.csc.poc.ems.model.jpa.entitlement.EntitlementValue</entity-name>
+		<entity-width>192</entity-width>
+		<entity-height>108</entity-height>
+		<entity-X-Coordinate>530</entity-X-Coordinate>
+		<entity-Y-Coordinate>37</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.sap.csc.poc.ems.model.jpa.entitlement.EntitlementHeader</entity-name>
+		<entity-width>175</entity-width>
+		<entity-height>246</entity-height>
+		<entity-X-Coordinate>326</entity-X-Coordinate>
+		<entity-Y-Coordinate>566</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.sap.csc.poc.ems.model.jpa.permission.UserCertification</entity-name>
+		<entity-width>128</entity-width>
+		<entity-height>128</entity-height>
+		<entity-X-Coordinate>101</entity-X-Coordinate>
+		<entity-Y-Coordinate>1178</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.sap.csc.poc.ems.model.jpa.permission.Privilege</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>186</entity-height>
+		<entity-X-Coordinate>815</entity-X-Coordinate>
+		<entity-Y-Coordinate>1149</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.sap.csc.poc.ems.model.jpa.notification.Notification</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>228</entity-height>
+		<entity-X-Coordinate>1060</entity-X-Coordinate>
+		<entity-Y-Coordinate>1122</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.sap.csc.poc.ems.model.jpa.permission.User</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>186</entity-height>
+		<entity-X-Coordinate>337</entity-X-Coordinate>
+		<entity-Y-Coordinate>1148</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.sap.csc.poc.ems.model.jpa.permission.Role</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>186</entity-height>
+		<entity-X-Coordinate>573</entity-X-Coordinate>
+		<entity-Y-Coordinate>1148</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.sap.csc.poc.ems.model.jpa.entitlement.EntitlementHeaderAttribute</entity-name>
+		<entity-width>182</entity-width>
+		<entity-height>70</entity-height>
+		<entity-X-Coordinate>229</entity-X-Coordinate>
+		<entity-Y-Coordinate>299</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.sap.csc.poc.ems.model.jpa.entitlement.EntitlementItemAttribute</entity-name>
+		<entity-width>171</entity-width>
+		<entity-height>70</entity-height>
+		<entity-X-Coordinate>846</entity-X-Coordinate>
+		<entity-Y-Coordinate>299</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.sap.csc.poc.ems.model.jpa.entitlement.EntitlementHeaderValue</entity-name>
+		<entity-width>162</entity-width>
+		<entity-height>70</entity-height>
+		<entity-X-Coordinate>77</entity-X-Coordinate>
+		<entity-Y-Coordinate>56</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.sap.csc.poc.ems.model.jpa.entitlement.EntitlementItemValue</entity-name>
+		<entity-width>161</entity-width>
+		<entity-height>70</entity-height>
+		<entity-X-Coordinate>1029</entity-X-Coordinate>
+		<entity-Y-Coordinate>56</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.sap.csc.poc.ems.model.jpa.entitlement.softwarelicense.SoftwareLicenseEntitlementHeader</entity-name>
+		<entity-width>239</entity-width>
+		<entity-height>90</entity-height>
+		<entity-X-Coordinate>38</entity-X-Coordinate>
+		<entity-Y-Coordinate>883</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.sap.csc.poc.ems.model.jpa.entitlement.softwarelicense.SoftwareLicenseEntitlementItem</entity-name>
+		<entity-width>243</entity-width>
+		<entity-height>90</entity-height>
+		<entity-X-Coordinate>988</entity-X-Coordinate>
+		<entity-Y-Coordinate>883</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+</entities>

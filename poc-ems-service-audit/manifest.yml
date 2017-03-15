@@ -1,0 +1,8 @@
+---
+applications:
+- name: ems-v2-service-audit
+  memory: 1G
+  host: ems-v2-service-audit
+  services:
+  - ems-v2-eureka-service
+  - postgres-service
