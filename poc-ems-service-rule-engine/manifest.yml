@@ -1,8 +1,0 @@
----
-applications:
-- name: ems-v2-service-rule-engine
-  memory: 1G
-  host: ems-v2-service-rule-engine
-  path: target/poc-ems-service-rule-engine-2.0.0-SNAPSHOT.jar
-  services:
-  - ems-v2-eureka-service
