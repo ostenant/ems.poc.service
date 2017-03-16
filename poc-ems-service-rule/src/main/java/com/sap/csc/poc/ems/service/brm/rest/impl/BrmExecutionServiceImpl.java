@@ -1,5 +1,6 @@
 package com.sap.csc.poc.ems.service.brm.rest.impl;
 
+import org.codehaus.jettison.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,7 +15,7 @@ public class BrmExecutionServiceImpl extends HttpApiService implements BrmExecut
 	private BrmExecutionClient brmExecutionClient;
 
 	@Override
-	public String execute(String ruleName, String executionBody) {
-		return brmExecutionClient.invoke(ruleName, executionBody);
+	public String execute(String ruleName, JSONArray executionBody) {
+		return brmExecutionClient.invoke(ruleName, executionBody.toString());
 	}
 }

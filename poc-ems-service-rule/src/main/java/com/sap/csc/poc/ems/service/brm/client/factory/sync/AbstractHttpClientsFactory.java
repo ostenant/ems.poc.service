@@ -10,17 +10,15 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 
 public interface AbstractHttpClientsFactory {
 
-	public RegistryBuilder<ConnectionSocketFactory> registryBuilder();
+	RegistryBuilder<ConnectionSocketFactory> registryBuilder();
 
-	public PoolingHttpClientConnectionManager connectionManager(
+	PoolingHttpClientConnectionManager connectionManager(
 			@Qualifier("registryBuilder") RegistryBuilder<ConnectionSocketFactory> registryBuilder);
 
-	public HttpClientBuilder httpClientBuilder(
+	HttpClientBuilder httpClientBuilder(
 			@Qualifier("httpClientConnectionManager") HttpClientConnectionManager connectionManager);
 
-	public HttpComponentsClientHttpRequestFactory clientHttpRequestFactory(
+	HttpComponentsClientHttpRequestFactory clientHttpRequestFactory(
 			@Qualifier("httpClientBuilder") HttpClientBuilder httpClientBuilder);
-
-	public void shutdownConnection();
 
 }

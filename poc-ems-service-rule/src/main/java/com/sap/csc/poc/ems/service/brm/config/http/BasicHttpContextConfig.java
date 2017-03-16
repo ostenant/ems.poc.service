@@ -3,12 +3,11 @@ package com.sap.csc.poc.ems.service.brm.config.http;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.KeyManagementException;
-import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +30,6 @@ import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.config.RequestConfig.Builder;
 import org.apache.http.conn.DnsResolver;
-import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.conn.SystemDefaultDnsResolver;
@@ -40,6 +38,7 @@ import org.apache.http.ssl.SSLContexts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.util.MimeTypeUtils;
 
 import com.google.common.collect.Maps;
@@ -49,11 +48,12 @@ import com.sap.csc.poc.ems.service.brm.config.proxy.BrmProxyConfig.HttpProxyConf
 import com.sap.csc.poc.ems.service.brm.config.proxy.BrmProxyConfig.HttpsProxyConfig;
 
 @Configuration
-public final class BasicHttpContextConfig implements HttpContextConfig {
+@Component
+public class BasicHttpContextConfig implements HttpContextConfig {
 
-	protected static final List<Header> defaultHeaders = Collections.emptyList();
+	protected List<Header> defaultHeaders = new ArrayList<Header>();
 
-	protected static final Map<String, HttpHost> proxyHosts = Maps.newHashMap();
+	protected Map<String, HttpHost> proxyHosts = Maps.newHashMap();
 
 	@Autowired
 	protected BrmPropertyHolder brmPropertyHolder;
@@ -95,11 +95,11 @@ public final class BasicHttpContextConfig implements HttpContextConfig {
 		}
 	}
 
-	public static Collection<Header> defaultHeaders() {
+	public Collection<Header> defaultHeaders() {
 		return defaultHeaders;
 	}
 
-	public static Map<String, HttpHost> proxyHosts() {
+	public Map<String, HttpHost> proxyHosts() {
 		return proxyHosts;
 	}
 
@@ -149,10 +149,10 @@ public final class BasicHttpContextConfig implements HttpContextConfig {
 		// Allow https trust all certificate
 		SSLContext sslContext = null;
 		try {
-			KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
 			sslContext = SSLContexts.custom()
 					// if certificate exists
-					.loadTrustMaterial(trustStore, new TrustSelfSignedStrategy())
+					// .loadTrustMaterial(trustStore, new
+					// TrustSelfSignedStrategy())
 					// if certificate not exists
 					.loadTrustMaterial(null, (chain, authType) -> {
 						// Bypass all
@@ -174,11 +174,11 @@ public final class BasicHttpContextConfig implements HttpContextConfig {
 	public RequestConfig requestConfig() {
 		RequestConfig componentRequestConfig = RequestConfig.copy(defaultRequestConfig())
 				// Timeout for connection established
-				.setConnectTimeout(3000)
+				.setConnectTimeout(50000)
 				// Timeout for fetching a idle connection from connection pool
-				.setConnectionRequestTimeout(3000)
+				.setConnectionRequestTimeout(50000)
 				// Timeout for response
-				.setSocketTimeout(5000)
+				.setSocketTimeout(120000)
 				// Set proxy
 				.setProxy(proxyHosts().containsKey(HTTP) ? //
 						proxyHosts().get(HTTP) : //

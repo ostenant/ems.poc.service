@@ -1,6 +1,5 @@
 package com.sap.csc.poc.ems.service.brm.client.factory.async;
 
-import java.io.IOException;
 import java.nio.charset.CodingErrorAction;
 import java.util.Collection;
 import java.util.Map;
@@ -41,19 +40,19 @@ import org.apache.http.nio.reactor.ConnectingIOReactor;
 import org.apache.http.nio.reactor.IOReactorException;
 import org.apache.http.nio.util.HeapByteBufferAllocator;
 import org.apache.http.util.CharArrayBuffer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.HttpComponentsAsyncClientHttpRequestFactory;
 
 import com.sap.csc.poc.ems.service.brm.client.factory.AbstractHttpContext;
 import com.sap.csc.poc.ems.service.brm.config.http.BasicHttpContextConfig;
 
+@Configuration
 public class AsyncHttpClientsFactory extends AbstractHttpContext implements AbstractAsyncHttpClientsFactory {
 
-	private NHttpClientConnectionManager nHttpClientConnectionManager;
-
-	public void setnHttpClientConnectionManager(NHttpClientConnectionManager nHttpClientConnectionManager) {
-		this.nHttpClientConnectionManager = nHttpClientConnectionManager;
-	}
+	@Autowired
+	private BasicHttpContextConfig basicHttpContextConfig;
 
 	@Bean
 	public ConnectingIOReactor connectingIOReactor() {
@@ -132,7 +131,7 @@ public class AsyncHttpClientsFactory extends AbstractHttpContext implements Abst
 		return sessionStrategyRegistry;
 	}
 
-	@Bean(name = "nHttpClientConnectionManager", destroyMethod = "shutdownConnection")
+	@Bean(name = "nHttpClientConnectionManager", destroyMethod = "shutdown")
 	public PoolingNHttpClientConnectionManager nHttpClientConnectionManager(ConnectingIOReactor ioReactor,
 			NHttpConnectionFactory<ManagedNHttpClientConnection> connFactory,
 			Registry<SchemeIOSessionStrategy> sessionStrategyRegistry) {
@@ -147,7 +146,6 @@ public class AsyncHttpClientsFactory extends AbstractHttpContext implements Abst
 		// Close idle connections per 5 mins
 		connectionManager.closeIdleConnections(10, TimeUnit.MINUTES);
 		// Save into local variable in case shuttdown
-		setnHttpClientConnectionManager(connectionManager);
 
 		return connectionManager;
 	}
@@ -165,13 +163,13 @@ public class AsyncHttpClientsFactory extends AbstractHttpContext implements Abst
 				// Set cookie store
 				.setDefaultCookieStore(getCookieStore());
 
-		final Collection<Header> defaultHeaders = BasicHttpContextConfig.defaultHeaders();
+		final Collection<Header> defaultHeaders = basicHttpContextConfig.defaultHeaders();
 		if (CollectionUtils.isNotEmpty(defaultHeaders)) {
 			// Set default Headers
 			builder.setDefaultHeaders(defaultHeaders);
 		}
 
-		final Map<String, HttpHost> proxyHosts = BasicHttpContextConfig.proxyHosts();
+		final Map<String, HttpHost> proxyHosts = basicHttpContextConfig.proxyHosts();
 		if (CollectionUtils.isNotEmpty(proxyHosts.entrySet())) {
 			// Set proxy if exists, prior to http, then https
 			if (proxyHosts.containsKey(HTTP)) {
@@ -184,26 +182,13 @@ public class AsyncHttpClientsFactory extends AbstractHttpContext implements Abst
 		return builder;
 	}
 
-	@Bean
+	@Bean("asyncClientHttpRequestFactory")
 	public HttpComponentsAsyncClientHttpRequestFactory asyncClientHttpRequestFactory(
 			HttpAsyncClientBuilder httpAsyncClientBuilder) {
 		HttpComponentsAsyncClientHttpRequestFactory asyncClientHttpRequestFactory = new HttpComponentsAsyncClientHttpRequestFactory(
 				httpAsyncClientBuilder.build());
 
 		return asyncClientHttpRequestFactory;
-	}
-
-	public void shutdownConnection() {
-		if (nHttpClientConnectionManager != null) {
-			nHttpClientConnectionManager.closeExpiredConnections();
-			try {
-				nHttpClientConnectionManager.shutdown();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				nHttpClientConnectionManager = null;
-			}
-		}
 	}
 
 }

@@ -45,6 +45,7 @@ public class CacheXsrfTokenInterceptor implements AsyncClientHttpRequestIntercep
 	public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution)
 			throws IOException {
 		addCsrfHeaders(request);
+		// waits until have a result, then returns the result
 		return execution.execute(request, body);
 	}
 
@@ -52,6 +53,7 @@ public class CacheXsrfTokenInterceptor implements AsyncClientHttpRequestIntercep
 	public ListenableFuture<ClientHttpResponse> intercept(HttpRequest request, byte[] body,
 			AsyncClientHttpRequestExecution execution) throws IOException {
 		addCsrfHeaders(request);
+		// returns a Future immediately which can be processed after handled
 		return execution.executeAsync(request, body);
 	}
 

@@ -14,30 +14,28 @@ import org.springframework.http.client.HttpComponentsAsyncClientHttpRequestFacto
 
 public interface AbstractAsyncHttpClientsFactory {
 
-	public ConnectingIOReactor connectingIOReactor();
+	ConnectingIOReactor connectingIOReactor();
 
-	public NHttpConnectionFactory<ManagedNHttpClientConnection> nioHttpConnectionFactory();
+	NHttpConnectionFactory<ManagedNHttpClientConnection> nioHttpConnectionFactory();
 
-	public ConnectionConfig connectionConfig();
+	ConnectionConfig connectionConfig();
 
 	/**
 	 * Create a registry of custom connection session strategies
 	 * 
 	 * @return
 	 */
-	public Registry<SchemeIOSessionStrategy> sessionStrategyRegistry();
+	Registry<SchemeIOSessionStrategy> sessionStrategyRegistry();
 
-	public PoolingNHttpClientConnectionManager nHttpClientConnectionManager(
+	PoolingNHttpClientConnectionManager nHttpClientConnectionManager(
 			@Qualifier("connectingIOReactor") ConnectingIOReactor ioReactor,
 			@Qualifier("nioHttpConnectionFactory") NHttpConnectionFactory<ManagedNHttpClientConnection> connFactory,
 			@Qualifier("sessionStrategyRegistry") Registry<SchemeIOSessionStrategy> sessionStrategyRegistry);
 
-	public HttpAsyncClientBuilder httpAsyncClientBuilder(
+	HttpAsyncClientBuilder httpAsyncClientBuilder(
 			@Qualifier("nHttpClientConnectionManager") NHttpClientConnectionManager connectionManager);
 
-	public HttpComponentsAsyncClientHttpRequestFactory asyncClientHttpRequestFactory(
+	HttpComponentsAsyncClientHttpRequestFactory asyncClientHttpRequestFactory(
 			@Qualifier("httpAsyncClientBuilder") HttpAsyncClientBuilder httpAsyncClientBuilder);
-
-	public void shutdownConnection();
 
 }

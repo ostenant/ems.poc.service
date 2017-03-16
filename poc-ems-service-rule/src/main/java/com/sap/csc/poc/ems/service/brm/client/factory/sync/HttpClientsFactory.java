@@ -15,6 +15,7 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -26,11 +27,8 @@ import com.sap.csc.poc.ems.service.brm.config.http.BasicHttpContextConfig;
 @Configuration
 public class HttpClientsFactory extends AbstractHttpContext implements AbstractHttpClientsFactory {
 
-	private HttpClientConnectionManager httpClientConnectionManager;
-
-	public void setHttpClientConnectionManager(HttpClientConnectionManager connectionManager) {
-		httpClientConnectionManager = connectionManager;
-	}
+	@Autowired
+	private BasicHttpContextConfig basicHttpContextConfig;
 
 	@Bean
 	@Order(1)
@@ -46,7 +44,7 @@ public class HttpClientsFactory extends AbstractHttpContext implements AbstractH
 		return registryBuilder;
 	}
 
-	@Bean(name = "httpClientConnectionManager", destroyMethod = "shutdownConnection")
+	@Bean(name = "httpClientConnectionManager", destroyMethod = "shutdown")
 	@Order(2)
 	public PoolingHttpClientConnectionManager connectionManager(
 			RegistryBuilder<ConnectionSocketFactory> registryBuilder) {
@@ -59,8 +57,6 @@ public class HttpClientsFactory extends AbstractHttpContext implements AbstractH
 		// Close idle connections per 5 mins
 		connectionManager.closeIdleConnections(10, TimeUnit.MINUTES);
 		// Save into local variable in case shuttdown
-		setHttpClientConnectionManager(connectionManager);
-
 		return connectionManager;
 	}
 
@@ -80,13 +76,13 @@ public class HttpClientsFactory extends AbstractHttpContext implements AbstractH
 				// Set self-defined dns resolver
 				.setDnsResolver(getDnsResolver());
 
-		final Collection<Header> defaultHeaders = BasicHttpContextConfig.defaultHeaders();
+		final Collection<Header> defaultHeaders = basicHttpContextConfig.defaultHeaders();
 		if (CollectionUtils.isNotEmpty(defaultHeaders)) {
 			// Set default Headers
 			builder.setDefaultHeaders(defaultHeaders);
 		}
 
-		final Map<String, HttpHost> proxyHosts = BasicHttpContextConfig.proxyHosts();
+		final Map<String, HttpHost> proxyHosts = basicHttpContextConfig.proxyHosts();
 		if (CollectionUtils.isNotEmpty(proxyHosts.entrySet())) {
 			// Set proxy if exists, prior to http, then https
 			if (proxyHosts.containsKey(HTTP)) {
@@ -99,7 +95,7 @@ public class HttpClientsFactory extends AbstractHttpContext implements AbstractH
 
 	}
 
-	@Bean
+	@Bean("clientHttpRequestFactory")
 	@Order(4)
 	public HttpComponentsClientHttpRequestFactory clientHttpRequestFactory(HttpClientBuilder httpClientBuilder) {
 		// For RestTemplate
@@ -107,13 +103,6 @@ public class HttpClientsFactory extends AbstractHttpContext implements AbstractH
 				httpClientBuilder.build());
 
 		return httpRequestFactory;
-	}
-
-	public void shutdownConnection() {
-		if (httpClientConnectionManager != null) {
-			httpClientConnectionManager.closeExpiredConnections();
-			httpClientConnectionManager.shutdown();
-		}
 	}
 
 }
