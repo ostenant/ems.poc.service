@@ -12,6 +12,10 @@ import org.apache.http.nio.reactor.ConnectingIOReactor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.client.HttpComponentsAsyncClientHttpRequestFactory;
 
+/**
+ * @author Vincent Chen
+ *
+ */
 public interface AbstractAsyncHttpClientsFactory {
 
 	ConnectingIOReactor connectingIOReactor();

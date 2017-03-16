@@ -12,12 +12,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sap.csc.poc.ems.model.dto.bre.BreBody;
-import com.sap.csc.poc.ems.service.brm.client.template.ConcurrentRestTemplate;
+import com.sap.csc.poc.ems.service.brm.client.template.MightyRestTemplate;
 import com.sap.csc.poc.ems.service.brm.config.property.BrmPropertyHolder.AuthenticationConfig.UriConfig.RepositoryUri;
+import com.sap.csc.poc.ems.service.brm.dto.metadata.BrmBody;
 
+/**
+ * @author Vincent Chen
+ *
+ */
 @Component("brmRepositoryClient")
-public class BrmRepositoryClient extends ConcurrentRestTemplate {
+public class BrmRepositoryClient extends MightyRestTemplate {
 
 	private static final String OBJECT_NAME_TEMPLATE = "%s.%s";
 
@@ -51,14 +55,15 @@ public class BrmRepositoryClient extends ConcurrentRestTemplate {
 								.build().toUri()),
 				// Response
 				String.class).getBody();
+
 		return body;
 	}
 
-	public <T extends BreBody> Pair<HttpStatus, String> create(T breBody) {
+	public <SpecBody extends BrmBody> Pair<HttpStatus, String> create(SpecBody brmBody) {
 		final ResponseEntity<String> responseEntity = getRestTemplate().exchange(
-				new RequestEntity<T>(
+				new RequestEntity<SpecBody>(
 						// Body
-						breBody,
+						brmBody,
 						// Method
 						HttpMethod.POST,
 						// Uri
@@ -70,7 +75,7 @@ public class BrmRepositoryClient extends ConcurrentRestTemplate {
 
 		// 204 NO_CREATE
 		if (HttpStatus.CREATED == responseEntity.getStatusCode()) {
-			Pair<HttpStatus, String> responsePair = Pair.of(responseEntity.getStatusCode(), breBody.getEntireName());
+			Pair<HttpStatus, String> responsePair = Pair.of(responseEntity.getStatusCode(), brmBody.getEntireName());
 			return responsePair;
 		} else {
 			Pair<HttpStatus, String> responsePair = Pair.of(responseEntity.getStatusCode(), responseEntity.getBody());
@@ -79,12 +84,12 @@ public class BrmRepositoryClient extends ConcurrentRestTemplate {
 
 	}
 
-	public <T extends BreBody> Pair<HttpStatus, String> update(T breBody) {
+	public <SpecBody extends BrmBody> Pair<HttpStatus, String> update(SpecBody brmBody) {
 
 		final ResponseEntity<String> responseEntity = getRestTemplate().exchange(
-				new RequestEntity<T>(
+				new RequestEntity<SpecBody>(
 						// Body
-						breBody,
+						brmBody,
 						// Method
 						HttpMethod.PATCH,
 						// Uri
@@ -96,7 +101,7 @@ public class BrmRepositoryClient extends ConcurrentRestTemplate {
 
 		// 204 NO_CONTENT
 		if (HttpStatus.NO_CONTENT == responseEntity.getStatusCode()) {
-			Pair<HttpStatus, String> responsePair = Pair.of(responseEntity.getStatusCode(), breBody.getEntireName());
+			Pair<HttpStatus, String> responsePair = Pair.of(responseEntity.getStatusCode(), brmBody.getEntireName());
 			return responsePair;
 		} else {
 			Pair<HttpStatus, String> responsePair = Pair.of(responseEntity.getStatusCode(), responseEntity.getBody());

@@ -16,10 +16,14 @@ import org.springframework.web.client.RestTemplate;
 
 import com.sap.csc.poc.ems.service.brm.client.handler.IgnoreResponseErrorHandler;
 import com.sap.csc.poc.ems.service.brm.client.interceptor.CacheXsrfTokenInterceptor;
+import com.sap.csc.poc.ems.service.brm.client.interceptor.EvictClutterHeadersInterceptor;
 import com.sap.csc.poc.ems.service.brm.client.interceptor.JsonContentTypeInterceptor;
-import com.sap.csc.poc.ems.service.brm.client.interceptor.PruneHeaderInterceptor;
 
-public class ConcurrentRestTemplate {
+/**
+ * @author Vincent Chen
+ *
+ */
+public class MightyRestTemplate {
 
 	protected static volatile ThreadLocal<RestTemplate> restTemplateLocal = new ThreadLocal<RestTemplate>();
 
@@ -30,7 +34,7 @@ public class ConcurrentRestTemplate {
 	private AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
 
 	@Autowired
-	protected PruneHeaderInterceptor pruneHeaderInterceptor;
+	protected EvictClutterHeadersInterceptor pruneHeaderInterceptor;
 
 	@Autowired
 	protected JsonContentTypeInterceptor jsonContentTypeInterceptor;

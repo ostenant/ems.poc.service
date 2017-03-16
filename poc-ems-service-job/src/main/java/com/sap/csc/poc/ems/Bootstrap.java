@@ -6,9 +6,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 
-/**
- * @author Diouf Du
- */
 @SpringBootApplication
 @EnableFeignClients
 public class Bootstrap extends SpringBootServletInitializer {

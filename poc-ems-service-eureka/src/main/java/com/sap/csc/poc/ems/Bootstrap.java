@@ -7,9 +7,6 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 import org.springframework.cloud.netflix.turbine.EnableTurbine;
 
-/**
- * @author Diouf Du
- */
 @SpringBootApplication
 @EnableEurekaServer
 @EnableTurbine

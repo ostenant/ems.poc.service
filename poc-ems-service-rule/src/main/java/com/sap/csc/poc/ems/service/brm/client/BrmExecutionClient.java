@@ -12,11 +12,15 @@ import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.google.common.util.concurrent.SettableFuture;
-import com.sap.csc.poc.ems.service.brm.client.template.ConcurrentRestTemplate;
+import com.sap.csc.poc.ems.service.brm.client.template.MightyRestTemplate;
 import com.sap.csc.poc.ems.service.brm.config.property.BrmPropertyHolder.AuthenticationConfig.UriConfig.ExecutionUri;
 
+/**
+ * @author Vincent Chen
+ *
+ */
 @Component("brmExecutionClient")
-public class BrmExecutionClient extends ConcurrentRestTemplate {
+public class BrmExecutionClient extends MightyRestTemplate {
 
 	@Autowired
 	protected ExecutionUri executionUri;

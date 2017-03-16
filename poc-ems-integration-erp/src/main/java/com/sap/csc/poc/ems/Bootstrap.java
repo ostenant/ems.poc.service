@@ -7,9 +7,6 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-/**
- * @author Diouf Du
- */
 @SpringBootApplication
 @EnableFeignClients
 @CrossOrigin

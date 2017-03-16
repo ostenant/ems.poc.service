@@ -23,11 +23,15 @@ import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.concurrent.ListenableFuture;
 
-import com.sap.csc.poc.ems.service.brm.client.template.DefaultRestTemplate;
+import com.sap.csc.poc.ems.service.brm.client.template.CsrfRestTemplate;
 import com.sap.csc.poc.ems.service.brm.config.property.BrmPropertyHolder;
 import com.sap.csc.poc.ems.service.brm.config.property.BrmPropertyHolder.AuthenticationConfig.UriConfig;
 import com.sap.csc.poc.ems.service.brm.config.property.BrmPropertyHolder.AuthenticationConfig.UriConfig.RepositoryUri;
 
+/**
+ * @author Vincent Chen
+ *
+ */
 @Component
 public class CacheXsrfTokenInterceptor implements AsyncClientHttpRequestInterceptor, ClientHttpRequestInterceptor {
 
@@ -38,7 +42,7 @@ public class CacheXsrfTokenInterceptor implements AsyncClientHttpRequestIntercep
 
 	@Autowired
 	@Qualifier("defaultRestTemplate")
-	protected DefaultRestTemplate defaultRestTemplate;
+	protected CsrfRestTemplate defaultRestTemplate;
 
 	@Autowired
 	protected BrmPropertyHolder brmPropertyHolder;

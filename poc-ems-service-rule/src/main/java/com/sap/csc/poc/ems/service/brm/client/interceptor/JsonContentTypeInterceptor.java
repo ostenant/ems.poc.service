@@ -13,6 +13,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.util.concurrent.ListenableFuture;
 
+/**
+ * @author Vincent Chen
+ *
+ */
 @Component
 public class JsonContentTypeInterceptor implements AsyncClientHttpRequestInterceptor, ClientHttpRequestInterceptor {
 

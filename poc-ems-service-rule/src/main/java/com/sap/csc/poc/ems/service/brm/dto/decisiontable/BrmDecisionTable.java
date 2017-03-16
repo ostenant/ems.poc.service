@@ -4,12 +4,16 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sap.csc.poc.ems.model.dto.bre.BreBody;
 import com.sap.csc.poc.ems.model.dto.bre.metadata.BreMetadata;
+import com.sap.csc.poc.ems.service.brm.dto.metadata.BrmBody;
 
+/**
+ * @author Vincent Chen
+ *
+ */
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class BrmDecisionTable implements BreBody {
+public class BrmDecisionTable implements BrmBody {
 
 	private static final long serialVersionUID = 6223607696470828196L;
 

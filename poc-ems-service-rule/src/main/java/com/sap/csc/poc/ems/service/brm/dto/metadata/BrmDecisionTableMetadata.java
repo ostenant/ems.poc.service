@@ -2,6 +2,10 @@ package com.sap.csc.poc.ems.service.brm.dto.metadata;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * @author Vincent Chen
+ *
+ */
 public class BrmDecisionTableMetadata extends BrmMetadata {
 
 	private static final long serialVersionUID = -5799421263700690300L;

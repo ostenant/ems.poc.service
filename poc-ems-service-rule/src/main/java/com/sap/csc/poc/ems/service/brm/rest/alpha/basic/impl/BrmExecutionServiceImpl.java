@@ -1,4 +1,4 @@
-package com.sap.csc.poc.ems.service.brm.rest.impl;
+package com.sap.csc.poc.ems.service.brm.rest.alpha.basic.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,13 +9,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sap.csc.poc.ems.service.brm.client.BrmExecutionClient;
 import com.sap.csc.poc.ems.service.brm.config.web.HttpApiService;
-import com.sap.csc.poc.ems.service.brm.rest.BrmExecutionService;
+import com.sap.csc.poc.ems.service.brm.rest.alpha.basic.BrmExecutionService;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
+/**
+ * @author Vincent Chen
+ *
+ */
 @RestController
+@RequestMapping("basic")
 public class BrmExecutionServiceImpl extends HttpApiService implements BrmExecutionService {
 
 	@Autowired
@@ -27,6 +32,6 @@ public class BrmExecutionServiceImpl extends HttpApiService implements BrmExecut
 			@ApiImplicitParam(name = "executionBody", paramType = "body", value = "Query conditions for invoke rules", required = true, dataType = "JsonArray") })
 	@RequestMapping(value = "rule/execution", method = RequestMethod.POST)
 	public String execute(@RequestParam("ruleName") String ruleName, @RequestBody String executionBody) {
-		return brmExecutionClient.invoke(ruleName, executionBody.toString());
+		return brmExecutionClient.invoke(ruleName, executionBody);
 	}
 }

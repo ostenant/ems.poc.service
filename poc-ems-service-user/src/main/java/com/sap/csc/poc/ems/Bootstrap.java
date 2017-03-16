@@ -9,9 +9,7 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.service.ApiInfo;
 
-/**
- * @author Diouf Du
- */
+
 @SpringBootApplication
 @EnableFeignClients
 public class Bootstrap extends SpringBootServletInitializer {

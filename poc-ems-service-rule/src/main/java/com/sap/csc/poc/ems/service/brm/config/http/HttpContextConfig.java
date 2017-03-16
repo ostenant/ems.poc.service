@@ -15,6 +15,10 @@ import org.apache.http.conn.DnsResolver;
 
 import com.google.common.collect.Maps;
 
+/**
+ * @author Vincent Chen
+ *
+ */
 public interface HttpContextConfig {
 
 	public static Collection<Header> defaultHeaders() {

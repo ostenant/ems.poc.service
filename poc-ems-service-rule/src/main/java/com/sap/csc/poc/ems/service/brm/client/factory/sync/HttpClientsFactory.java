@@ -24,6 +24,10 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import com.sap.csc.poc.ems.service.brm.client.factory.AbstractHttpContext;
 import com.sap.csc.poc.ems.service.brm.config.http.BasicHttpContextConfig;
 
+/**
+ * @author Vincent Chen
+ *
+ */
 @Configuration
 public class HttpClientsFactory extends AbstractHttpContext implements AbstractHttpClientsFactory {
 

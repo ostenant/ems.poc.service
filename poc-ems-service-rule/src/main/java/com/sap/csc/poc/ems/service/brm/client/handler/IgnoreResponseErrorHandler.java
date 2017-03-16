@@ -6,6 +6,10 @@ import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 
+/**
+ * @author Vincent Chen
+ *
+ */
 @Component
 public class IgnoreResponseErrorHandler extends DefaultResponseErrorHandler {
 

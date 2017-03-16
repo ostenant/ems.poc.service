@@ -9,9 +9,9 @@ spring:
     name: rule-engine-service
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/emsv2?createDatabaseIfNotExist=true
-    username: sa
-    password: Welcome1
+    url: jdbc:mysql://localhost:3306/ems?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8
+    username: root
+    password: root
   jpa:
     show-sql: true
     generate-ddl: true

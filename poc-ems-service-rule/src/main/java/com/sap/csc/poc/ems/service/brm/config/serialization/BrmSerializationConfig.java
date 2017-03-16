@@ -8,6 +8,10 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+/**
+ * @author Vincent Chen
+ *
+ */
 @Configuration
 public class BrmSerializationConfig {
 

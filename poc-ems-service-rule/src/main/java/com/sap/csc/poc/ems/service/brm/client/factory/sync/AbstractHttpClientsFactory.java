@@ -8,6 +8,10 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 
+/**
+ * @author Vincent Chen
+ *
+ */
 public interface AbstractHttpClientsFactory {
 
 	RegistryBuilder<ConnectionSocketFactory> registryBuilder();

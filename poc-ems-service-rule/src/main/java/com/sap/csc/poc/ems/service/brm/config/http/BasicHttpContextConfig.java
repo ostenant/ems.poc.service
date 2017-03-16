@@ -47,6 +47,10 @@ import com.sap.csc.poc.ems.service.brm.config.proxy.BrmProxyConfig;
 import com.sap.csc.poc.ems.service.brm.config.proxy.BrmProxyConfig.HttpProxyConfig;
 import com.sap.csc.poc.ems.service.brm.config.proxy.BrmProxyConfig.HttpsProxyConfig;
 
+/**
+ * @author Vincent Chen
+ *
+ */
 @Configuration
 @Component
 public class BasicHttpContextConfig implements HttpContextConfig {

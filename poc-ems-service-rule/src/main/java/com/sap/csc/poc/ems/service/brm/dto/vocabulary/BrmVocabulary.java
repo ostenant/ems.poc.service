@@ -3,11 +3,15 @@ package com.sap.csc.poc.ems.service.brm.dto.vocabulary;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sap.csc.poc.ems.model.dto.bre.BreBody;
 import com.sap.csc.poc.ems.model.dto.bre.metadata.BreVocabularyMetadata;
+import com.sap.csc.poc.ems.service.brm.dto.metadata.BrmBody;
 
+/**
+ * @author Vincent Chen
+ *
+ */
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class BrmVocabulary implements BreBody {
+public class BrmVocabulary implements BrmBody {
 
 	private static final long serialVersionUID = 8093381356500409879L;
 
