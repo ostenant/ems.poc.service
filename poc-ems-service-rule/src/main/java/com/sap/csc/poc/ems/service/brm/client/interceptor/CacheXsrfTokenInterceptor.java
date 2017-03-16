@@ -34,6 +34,8 @@ public class CacheXsrfTokenInterceptor implements AsyncClientHttpRequestIntercep
 	private final ConcurrentHashMap<String, Pair<String, Calendar>> xsrfTokenMap = new ConcurrentHashMap<String, Pair<String, Calendar>>(
 			2);
 
+	private static final String X_CSRF_TOKEN = "X-CSRF-Token";
+
 	@Autowired
 	@Qualifier("defaultRestTemplate")
 	protected DefaultRestTemplate defaultRestTemplate;
@@ -62,13 +64,13 @@ public class CacheXsrfTokenInterceptor implements AsyncClientHttpRequestIntercep
 		UriConfig uri = brmPropertyHolder.getUri();
 		if (request.getMethod() == HttpMethod.GET && StringUtils.equalsIgnoreCase(url, uri.getRepository().getXsrf())
 				|| StringUtils.equalsIgnoreCase(url, uri.getExecution().getXsrf())) {
-			request.getHeaders().add("x-csrf-token", "Fetch");
+			request.getHeaders().add(X_CSRF_TOKEN, "Fetch");
 			addBasicAuthHeader(request);
 		} else if (url.startsWith(uri.getRepository().getRoot())) {
-			request.getHeaders().add("x-csrf-token", this.getXsrfToken(uri.getRepository().getRoot()));
+			request.getHeaders().add(X_CSRF_TOKEN, this.getXsrfToken(uri.getRepository().getRoot()));
 			addBasicAuthHeader(request);
 		} else if (url.startsWith(uri.getExecution().getRoot())) {
-			request.getHeaders().add("x-csrf-token", this.getXsrfToken(uri.getExecution().getRoot()));
+			request.getHeaders().add(X_CSRF_TOKEN, this.getXsrfToken(uri.getExecution().getRoot()));
 			addBasicAuthHeader(request);
 		}
 	}
@@ -131,7 +133,7 @@ public class CacheXsrfTokenInterceptor implements AsyncClientHttpRequestIntercep
 								URI.create(brmPropertyHolder.getUri().getExecution().getXsrf())),
 						// Response
 						String.class)
-				.getHeaders().getFirst("x-csrf-token");
+				.getHeaders().getFirst("X-csrf-token");
 
 		return runtimeXsrfToken;
 	}

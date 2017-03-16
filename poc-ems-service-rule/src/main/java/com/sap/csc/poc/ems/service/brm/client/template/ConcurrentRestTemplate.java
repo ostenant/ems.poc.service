@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.client.AsyncClientHttpRequestInterceptor;
@@ -16,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import com.sap.csc.poc.ems.service.brm.client.handler.IgnoreResponseErrorHandler;
 import com.sap.csc.poc.ems.service.brm.client.interceptor.CacheXsrfTokenInterceptor;
 import com.sap.csc.poc.ems.service.brm.client.interceptor.JsonContentTypeInterceptor;
+import com.sap.csc.poc.ems.service.brm.client.interceptor.PruneHeaderInterceptor;
 
 public class ConcurrentRestTemplate {
 
@@ -28,10 +30,13 @@ public class ConcurrentRestTemplate {
 	private AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
 
 	@Autowired
-	protected CacheXsrfTokenInterceptor cacheXsrfTokenInterceptor;
+	protected PruneHeaderInterceptor pruneHeaderInterceptor;
 
 	@Autowired
 	protected JsonContentTypeInterceptor jsonContentTypeInterceptor;
+
+	@Autowired
+	protected CacheXsrfTokenInterceptor cacheXsrfTokenInterceptor;
 
 	@Autowired
 	protected IgnoreResponseErrorHandler errorHandler;
@@ -63,42 +68,37 @@ public class ConcurrentRestTemplate {
 		// Set HttpComponentsClientHttpRequestFactory for restTemplate
 		restTemplate.setRequestFactory(clientHttpRequestFactory);
 		List<ClientHttpRequestInterceptor> interceptors = restTemplate.getInterceptors();
-		if (interceptors.size() > 0) {
-			for (ClientHttpRequestInterceptor interceptor : interceptors) {
-				if (interceptor instanceof CacheXsrfTokenInterceptor) {
-					restTemplateLocal.set(restTemplate);
-					return;
-				}
-			}
-
-		} else {
-			restTemplate.getInterceptors().add(cacheXsrfTokenInterceptor);
+		if (CollectionUtils.isEmpty(interceptors)) {
+			// add first
+			restTemplate.getInterceptors().add(pruneHeaderInterceptor);
 			restTemplate.getInterceptors().add(jsonContentTypeInterceptor);
+			// add last
+			restTemplate.getInterceptors().add(cacheXsrfTokenInterceptor);
 			restTemplate.setErrorHandler(errorHandler);
 		}
 
-		restTemplateLocal.set(restTemplate);
+		if (restTemplateLocal.get() == null) {
+			restTemplateLocal.set(restTemplate);
+		}
+
 	}
 
 	private void initialAsyncRestTemplate() {
 		// Set HttpComponentsAsyncClientHttpRequestFactory for asyncRestTemplate
 		asyncRestTemplate.setAsyncRequestFactory(asyncClientHttpRequestFactory);
 		List<AsyncClientHttpRequestInterceptor> interceptors = asyncRestTemplate.getInterceptors();
-		if (interceptors.size() > 0) {
-			for (AsyncClientHttpRequestInterceptor interceptor : interceptors) {
-				if (interceptor instanceof CacheXsrfTokenInterceptor) {
-					asyncRestTemplateLocal.set(asyncRestTemplate);
-					return;
-				}
-			}
-
-		} else {
-			asyncRestTemplate.getInterceptors().add(cacheXsrfTokenInterceptor);
+		if (CollectionUtils.isEmpty(interceptors)) {
+			// add first
+			asyncRestTemplate.getInterceptors().add(pruneHeaderInterceptor);
 			asyncRestTemplate.getInterceptors().add(jsonContentTypeInterceptor);
+			// add last
+			asyncRestTemplate.getInterceptors().add(cacheXsrfTokenInterceptor);
 			asyncRestTemplate.setErrorHandler(errorHandler);
 		}
 
-		asyncRestTemplateLocal.set(asyncRestTemplate);
+		if (asyncRestTemplateLocal.get() == null) {
+			asyncRestTemplateLocal.set(asyncRestTemplate);
+		}
 	}
 
 	public RestTemplate getRestTemplate() {

@@ -1,6 +1,5 @@
 package com.sap.csc.poc.ems.service.brm.rest;
 
-import org.codehaus.jettison.json.JSONArray;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +18,6 @@ public interface BrmExecutionService {
 			@ApiImplicitParam(name = "ruleName", paramType = "query", value = "Qualified rule artifact name. For example, \"pkg1.pkg2::rule_name\"", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "executionBody", paramType = "body", value = "Query conditions for invoke rules", required = true, dataType = "JsonArray") })
 	@RequestMapping(value = "rule/execution", method = RequestMethod.POST)
-	String execute(@RequestParam("ruleName") String ruleName, @RequestBody JSONArray executionBody);
+	String execute(@RequestParam("ruleName") String ruleName, @RequestBody String executionBody);
 
 }
