@@ -41,8 +41,8 @@ public class CacheXsrfTokenInterceptor implements AsyncClientHttpRequestIntercep
 	private static final String X_CSRF_TOKEN = "X-CSRF-Token";
 
 	@Autowired
-	@Qualifier("defaultRestTemplate")
-	protected CsrfRestTemplate defaultRestTemplate;
+	@Qualifier("csrfRestTemplate")
+	protected CsrfRestTemplate csrfRestTemplate;
 
 	@Autowired
 	protected BrmPropertyHolder brmPropertyHolder;
@@ -113,7 +113,7 @@ public class CacheXsrfTokenInterceptor implements AsyncClientHttpRequestIntercep
 
 	private String getDesignTimeXsrfToken() {
 
-		final String designTimeXsrfToken = defaultRestTemplate.getRestTemplate()
+		final String designTimeXsrfToken = csrfRestTemplate.getRestTemplate()
 				.exchange(
 						new RequestEntity<Object>(
 								// Method
@@ -128,7 +128,7 @@ public class CacheXsrfTokenInterceptor implements AsyncClientHttpRequestIntercep
 	}
 
 	private String getRunTimeXsrfToken() {
-		final String runtimeXsrfToken = defaultRestTemplate.getRestTemplate()
+		final String runtimeXsrfToken = csrfRestTemplate.getRestTemplate()
 				.exchange(
 						new RequestEntity<Object>(
 								// Method

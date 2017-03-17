@@ -34,7 +34,7 @@ public class MightyRestTemplate {
 	private AsyncRestTemplate asyncRestTemplate = new AsyncRestTemplate();
 
 	@Autowired
-	protected EvictClutterHeadersInterceptor pruneHeaderInterceptor;
+	protected EvictClutterHeadersInterceptor evictClutterHeadersInterceptor;
 
 	@Autowired
 	protected JsonContentTypeInterceptor jsonContentTypeInterceptor;
@@ -74,7 +74,7 @@ public class MightyRestTemplate {
 		List<ClientHttpRequestInterceptor> interceptors = restTemplate.getInterceptors();
 		if (CollectionUtils.isEmpty(interceptors)) {
 			// add first
-			restTemplate.getInterceptors().add(pruneHeaderInterceptor);
+			restTemplate.getInterceptors().add(evictClutterHeadersInterceptor);
 			restTemplate.getInterceptors().add(jsonContentTypeInterceptor);
 			// add last
 			restTemplate.getInterceptors().add(cacheXsrfTokenInterceptor);
@@ -93,7 +93,7 @@ public class MightyRestTemplate {
 		List<AsyncClientHttpRequestInterceptor> interceptors = asyncRestTemplate.getInterceptors();
 		if (CollectionUtils.isEmpty(interceptors)) {
 			// add first
-			asyncRestTemplate.getInterceptors().add(pruneHeaderInterceptor);
+			asyncRestTemplate.getInterceptors().add(evictClutterHeadersInterceptor);
 			asyncRestTemplate.getInterceptors().add(jsonContentTypeInterceptor);
 			// add last
 			asyncRestTemplate.getInterceptors().add(cacheXsrfTokenInterceptor);

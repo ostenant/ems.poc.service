@@ -23,13 +23,13 @@ public class BrmProxyConfig {
 		/**
 		 * BRE Http Proxy Host
 		 */
-		@Value("${local.proxy.http.host}")
+		@Value("${local.proxy.http.host:}")
 		protected String host;
 
 		/**
 		 * BRE Http Proxy Port
 		 */
-		@Value("${local.proxy.http.port}")
+		@Value("${local.proxy.http.port:}")
 		protected Integer port;
 
 		public String getHost() {
@@ -56,13 +56,13 @@ public class BrmProxyConfig {
 		/**
 		 * BRE Https Proxy Host
 		 */
-		@Value("${local.proxy.https.host}")
+		@Value("${local.proxy.https.host:}")
 		protected String host;
 
 		/**
 		 * BRE Https Proxy Port
 		 */
-		@Value("${local.proxy.https.port}")
+		@Value("${local.proxy.https.port:}")
 		protected Integer port;
 
 		public String getHost() {

@@ -13,7 +13,7 @@ import com.sap.csc.poc.ems.service.brm.config.property.BrmPropertyHolder.Authent
  */
 @Configuration
 @Component
-@PropertySource("classpath:/brm.properties")
+@PropertySource(value = "classpath:/brm.properties", ignoreResourceNotFound = true)
 public class BrmPropertyHolder {
 
 	@Autowired
@@ -23,7 +23,7 @@ public class BrmPropertyHolder {
 	protected UriConfig uri;
 
 	@Component
-	@PropertySource("classpath:/brm.properties")
+	@PropertySource(value = "classpath:/brm.properties", ignoreResourceNotFound = true)
 	public static class AuthenticationConfig {
 
 		/**
@@ -51,7 +51,7 @@ public class BrmPropertyHolder {
 		protected String password;
 
 		@Component
-		@PropertySource("classpath:/brm.properties")
+		@PropertySource(value = "classpath:/brm.properties", ignoreResourceNotFound = true)
 		public static class UriConfig {
 
 			@Autowired
@@ -61,7 +61,7 @@ public class BrmPropertyHolder {
 			protected ExecutionUri execution;
 
 			@Component
-			@PropertySource("classpath:/brm.properties")
+			@PropertySource(value = "classpath:/brm.properties", ignoreResourceNotFound = true)
 			public static class RepositoryUri {
 
 				/**
@@ -95,7 +95,7 @@ public class BrmPropertyHolder {
 			}
 
 			@Component
-			@PropertySource("classpath:/brm.properties")
+			@PropertySource(value = "classpath:/brm.properties", ignoreResourceNotFound = true)
 			public static class ExecutionUri {
 
 				/**

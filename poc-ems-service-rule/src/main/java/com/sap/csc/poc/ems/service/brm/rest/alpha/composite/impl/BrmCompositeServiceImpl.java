@@ -3,11 +3,11 @@ package com.sap.csc.poc.ems.service.brm.rest.alpha.composite.impl;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.sap.csc.poc.ems.service.brm.config.web.HttpApiService;
 import com.sap.csc.poc.ems.service.brm.rest.alpha.basic.BrmDecisionTableService;
@@ -19,7 +19,8 @@ import com.sap.csc.poc.ems.service.brm.rest.alpha.composite.BrmCompositeService;
  * @author Vincent Chen
  *
  */
-@Component
+@RestController
+@RequestMapping("composite")
 public class BrmCompositeServiceImpl extends HttpApiService implements BrmCompositeService {
 
 	@Autowired

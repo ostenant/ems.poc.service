@@ -1,16 +1,16 @@
 package com.sap.csc.poc.ems.service.brm.rest.alpha.composite;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * @author Vincent Chen
  *
  */
-@FeignClient(name = "rule-engine-service")
+// @FeignClient(name = "rule-engine-service")
+@RequestMapping("composite")
 public interface BrmCompositeService {
 
 	/**
@@ -19,7 +19,8 @@ public interface BrmCompositeService {
 	 * @param vocabularyBody
 	 * @return
 	 */
-	public Pair<HttpStatus, String> createAndActivateVocabulary(@RequestBody String vocabularyBody);
+	@RequestMapping(value = "rule/vocabulary", method = RequestMethod.POST)
+	public Pair<HttpStatus, String> createAndActivateVocabulary(String vocabularyBody);
 
 	/**
 	 * updates and activate vocabulary
@@ -27,7 +28,8 @@ public interface BrmCompositeService {
 	 * @param vocabularyBody
 	 * @return
 	 */
-	public Pair<HttpStatus, String> updateAndActivateVocabulary(@RequestBody String vocabularyBody);
+	@RequestMapping(value = "rule/vocabulary", method = RequestMethod.PUT)
+	public Pair<HttpStatus, String> updateAndActivateVocabulary(String vocabularyBody);
 
 	/**
 	 * creates and activate decisionTable
@@ -35,7 +37,8 @@ public interface BrmCompositeService {
 	 * @param decisionTableBody
 	 * @return
 	 */
-	public Pair<HttpStatus, String> createAndActivateDecisionTable(@RequestBody String decisionTableBody);
+	@RequestMapping(value = "rule/decisionTable", method = RequestMethod.POST)
+	public Pair<HttpStatus, String> createAndActivateDecisionTable(String decisionTableBody);
 
 	/**
 	 * updates and activate decisionTable
@@ -43,7 +46,8 @@ public interface BrmCompositeService {
 	 * @param decisionTableBody
 	 * @return
 	 */
-	public Pair<HttpStatus, String> updateAndActivateDecisionTable(@RequestBody String decisionTableBody);
+	@RequestMapping(value = "rule/decisionTable", method = RequestMethod.PUT)
+	public Pair<HttpStatus, String> updateAndActivateDecisionTable(String decisionTableBody);
 
 	/**
 	 * Invoke higher level
@@ -52,6 +56,7 @@ public interface BrmCompositeService {
 	 * @param executionBody
 	 * @return
 	 */
-	public String invoke(@RequestParam("ruleName") String ruleName, @RequestBody String executionBody);
+	@RequestMapping(value = "rule/execution", method = RequestMethod.POST)
+	public String invoke(String ruleName, String executionBody);
 
 }
