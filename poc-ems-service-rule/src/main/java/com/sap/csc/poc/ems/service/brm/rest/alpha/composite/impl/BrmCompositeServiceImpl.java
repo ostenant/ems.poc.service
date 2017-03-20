@@ -15,6 +15,10 @@ import com.sap.csc.poc.ems.service.brm.rest.alpha.basic.BrmExecutionService;
 import com.sap.csc.poc.ems.service.brm.rest.alpha.basic.BrmVocabularyService;
 import com.sap.csc.poc.ems.service.brm.rest.alpha.composite.BrmCompositeService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * @author Vincent Chen
  *
@@ -32,6 +36,9 @@ public class BrmCompositeServiceImpl extends HttpApiService implements BrmCompos
 	@Autowired
 	private BrmExecutionService brmExecutionService;
 
+	@ApiOperation(value = "Creates and activates vocabulary", httpMethod = "POST")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "vocabularyBody", paramType = "body", value = "Vocabulary content", required = true, dataType = "JsonArray") })
 	@RequestMapping(value = "rule/vocabulary", method = RequestMethod.POST)
 	public Pair<HttpStatus, String> createAndActivateVocabulary(@RequestBody String vocabularyBody) {
 		Pair<HttpStatus, String> httpPair = brmVocabularyService.create(vocabularyBody);
@@ -42,6 +49,9 @@ public class BrmCompositeServiceImpl extends HttpApiService implements BrmCompos
 		}
 	}
 
+	@ApiOperation(value = "Updates and activates vocabulary", httpMethod = "PUT")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "vocabularyBody", paramType = "body", value = "Vocabulary content", required = true, dataType = "JsonArray") })
 	@RequestMapping(value = "rule/vocabulary", method = RequestMethod.PUT)
 	public Pair<HttpStatus, String> updateAndActivateVocabulary(@RequestBody String vocabularyBody) {
 		Pair<HttpStatus, String> httpPair = brmVocabularyService.update(vocabularyBody);
@@ -52,6 +62,9 @@ public class BrmCompositeServiceImpl extends HttpApiService implements BrmCompos
 		}
 	}
 
+	@ApiOperation(value = "Creates and activates decisionTable", httpMethod = "POST")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "decisionTableBody", paramType = "body", value = "DecisionTable content", required = true, dataType = "JsonArray") })
 	@RequestMapping(value = "rule/decisionTable", method = RequestMethod.POST)
 	public Pair<HttpStatus, String> createAndActivateDecisionTable(@RequestBody String decisionTableBody) {
 		Pair<HttpStatus, String> httpPair = brmDecisionTableService.create(decisionTableBody);
@@ -62,6 +75,9 @@ public class BrmCompositeServiceImpl extends HttpApiService implements BrmCompos
 		}
 	}
 
+	@ApiOperation(value = "Updates and activates decisionTable", httpMethod = "PUT")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "decisionTableBody", paramType = "body", value = "DecisionTable content", required = true, dataType = "JsonArray") })
 	@RequestMapping(value = "rule/decisionTable", method = RequestMethod.PUT)
 	public Pair<HttpStatus, String> updateAndActivateDecisionTable(@RequestBody String decisionTableBody) {
 		Pair<HttpStatus, String> httpPair = brmDecisionTableService.update(decisionTableBody);
@@ -72,6 +88,10 @@ public class BrmCompositeServiceImpl extends HttpApiService implements BrmCompos
 		}
 	}
 
+	@ApiOperation(value = "Executes specified rule", httpMethod = "POST")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "ruleName", paramType = "query", value = "Target rule", required = true, dataType = "JsonArray"),
+			@ApiImplicitParam(name = "executionBody", paramType = "body", value = "Conditions combination", required = true, dataType = "JsonArray") })
 	@RequestMapping(value = "rule/execution", method = RequestMethod.POST)
 	public String invoke(@RequestParam("ruleName") String ruleName, @RequestBody String executionBody) {
 		// TODO

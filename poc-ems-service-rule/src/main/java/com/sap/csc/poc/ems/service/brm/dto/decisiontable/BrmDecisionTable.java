@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sap.csc.poc.ems.model.dto.bre.metadata.BreMetadata;
 import com.sap.csc.poc.ems.service.brm.dto.metadata.BrmBody;
+import com.sap.csc.poc.ems.service.brm.dto.metadata.BrmDecisionTableMetadata;
 
 /**
  * @author Vincent Chen
@@ -21,7 +21,7 @@ public class BrmDecisionTable implements BrmBody {
 	private BrmDecisionTableContent content;
 
 	@JsonProperty("meta_data")
-	private BreMetadata metadata;
+	private BrmDecisionTableMetadata metadata;
 
 	@JsonProperty("content")
 	public BrmDecisionTableContent getContent() {
@@ -34,12 +34,12 @@ public class BrmDecisionTable implements BrmBody {
 	}
 
 	@JsonProperty("meta_data")
-	public BreMetadata getMetadata() {
+	public BrmDecisionTableMetadata getMetadata() {
 		return metadata;
 	}
 
 	@JsonProperty("meta_data")
-	public void setMetadata(BreMetadata metadata) {
+	public void setMetadata(BrmDecisionTableMetadata metadata) {
 		this.metadata = metadata;
 	}
 
