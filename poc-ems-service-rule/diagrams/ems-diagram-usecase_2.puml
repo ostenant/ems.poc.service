@@ -1,0 +1,106 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+'actor EMS系统管理员
+'actor 实施顾问
+'actor ERP系统管理员
+'actor 销售人员
+
+:EMS系统管理员: -right-> (认证授权子系统)
+:EMS系统管理员: -right-> (规则引擎子系统)
+:EMS系统管理员: -right-> (权益管理子系统)
+
+:实施顾问: -right-> (认证授权子系统)
+:实施顾问: -right-> (规则引擎子系统)
+:实施顾问: -right-> (权益管理子系统)
+
+rectangle EMS管理系统 {
+
+    rectangle 认证授权子系统 {
+        (认证管理) --> (用户组管理) : <<including>>
+        (认证管理) --> (用户管理) : <<including>>
+        (授权管理) --> (角色管理) : <<including>>
+        (认证管理) <. (授权管理) : <<dependency>>
+        (注册登录) .> (认证管理) : <<dependency>>
+        (角色管理) --> (角色组管理) : <<including>>
+        (角色管理) --> (权限管理) : <<including>>
+        (权限管理) ... (角色组管理)
+        (用户组管理) ... (角色组管理)
+        (用户管理) ... (角色管理)
+    }
+
+    rectangle 规则引擎子系统 {
+        (查询管理) ..>  (查询规则项目) : <<generalization>>
+        (查询管理) ..>  (查询规则服务) : <<generalization>>
+        (查询管理) ..>  (查询规则集合) : <<generalization>>
+        (查询规则集合) ..> (查询规则服务)
+        (查询规则项目) .. (查询规则集合)
+        (查询规则集合) .. (查询规则)
+        (查询规则) .. (查询词汇表)
+        (查询规则) .. (查询决策表)
+        (查询规则) .. (查询规则日志)
+
+        (激活管理) .. (创建管理) : <<association>>
+        (激活管理) .. (修改管理) : <<association>>
+        (激活管理) .. (删除管理) : <<association>>
+
+        (创建管理) ..> (创建规则项目) : <<generalization>>
+        (创建规则项目) --> (创建规则服务) : <<including>>
+        (创建规则项目) --> (创建规则集合) : <<including>>
+        (创建规则集合) <.. (创建规则服务)
+        (创建规则集合) --> (创建规则) : <<including>>
+        (创建规则) --> (创建词汇表) : <<including>>
+        (创建规则) --> (创建决策表) : <<including>>
+        (创建词汇表) <-- (创建决策表)  : <<dependency>>
+
+        (修改管理) ..> (修改规则集合) : <<generalization>>
+        (修改管理) ..> (修改规则服务) : <<generalization>>
+        (修改管理) ..> (修改规则) : <<generalization>>
+        (修改规则集合) --> (修改规则) : <<including>>
+        (修改规则集合) --> (修改规则服务) : <<including>>
+        (修改规则) ..> (修改词汇表) : <<generalization>>
+        (修改规则) ..> (修改决策表) : <<generalization>>
+        (修改词汇表) ..> (修改决策表) : <<including>>
+        (修改词汇表) <-- (修改决策表) : <<dependency>>
+
+        (删除管理) ..> (删除规则项目) : <<generalization>>
+        (删除管理) ..> (删除规则服务) : <<generalization>>
+        (删除规则项目) --> (删除规则集合)
+        (删除管理) ..> (删除规则集合) : <<generalization>>
+        (删除规则集合) --> (删除规则服务)
+        (删除规则集合) --> (删除规则)
+        (删除规则) --> (删除词汇表) : <<including>>
+        (删除规则) --> (删除决策表) : <<including>>
+        (删除决策表) <..(删除词汇表)
+
+        (运行管理) . (查询管理) : <<association>>
+        (激活管理) . (运行管理) : <<association>>
+    }
+
+    rectangle 权益管理子系统 {
+        (权益管理) ---> (生成权益) : <<including>>
+        (权益管理) ---> (查询权益) : <<including>>
+        (权益管理) ---> (修改权益) : <<including>>
+        (权益管理) ---> (导出权益) : <<including>>
+'        (权益管理) ---> (导入权益) : <<including>>
+
+        (生成权益) <...  (模拟场景调用) : <<extension>>
+        (生成权益) ...> (批量生成权益) : <<extension>>
+
+        (查询权益) ...> (查询我的权益列表) : <<generalization>>
+        (查询我的权益列表) ---> (查询权益子项) : <<including>>
+        (查询我的权益列表) ---> (查询权益日志) : <<including>>
+
+        (修改权益) ---> (修改权益元信息) : <<including>>
+        (修改权益) ---> (修改权益子项) : <<including>>
+        (修改权益子项) ---> (合并权益子项) : <<extension>>
+        (修改权益子项) ---> (拆分权益子项) : <<extension>>
+        (修改权益子项) ---> (转换权益子项) : <<extension>>
+
+        (导出权益) ...> (导出我的权益) : <<generalization>>
+'        (导入权益) ...> (导入我的权益) : <<generalization>>
+    }
+
+}
+
+@enduml

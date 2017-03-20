@@ -1,0 +1,607 @@
+@startuml
+
+'package com.sap.csc.poc.ems {
+'    class Bootstrap {
+'        {static} void main(String[])
+'        void configure(SpringApplicationBuilder)
+'    }
+'}
+'
+'SpringBootServletInitializer <|- Bootstrap
+
+package com.sap.csc.poc.ems.service.brm.dto.metadata {
+    interface BrmBody {
+        +String getEntireName()
+    }
+
+    interface BrmSuffix {
+        +String getSuffix()
+    }
+
+    class BrmMetadata {
+        -String packageId
+        -String objectName
+        -String objectSuffix
+        -String status
+        +Object getter()
+        +void setter(object)
+    }
+
+    class BrmVocabularyMetadata {
+        -String objectSuffix
+    }
+
+    class BrmDecisionTableMetadata {
+        -String objectSuffix
+    }
+
+    BrmDecisionTableMetadata -|> BrmMetadata
+    BrmVocabularyMetadata -|> BrmMetadata
+
+}
+
+
+package com.sap.csc.poc.ems.service.brm.dto.vocabulary {
+
+    class BrmVocabularySuffix {
+        -String packageId
+        -String objectName
+        -String objectSuffix
+        -String status
+        +Object getter()
+        +void setter(object)
+        +String getSuffix()
+    }
+
+    class BrmVocabulary {
+        -BreVocabularyMetadata metadata
+        -BrmVocabularyContent content
+        +Object getter()
+        +void setter(object)
+        +String getEntireName()
+    }
+
+
+    class BrmVocabularyContent {
+        -List<DataObject> dataObjects
+        +Object getter()
+        +void setter(object)
+    }
+
+    class DataObject {
+        -String name
+        -String description
+        -List<Attribute> attributes
+        -List<Association> associations
+        +Object getter()
+        +void setter(object)
+    }
+
+    class Attribute {
+        -String name
+        -String description
+        -String dataType;
+        -String sourceType;
+        +Object getter()
+        +void setter(object)
+    }
+
+    class Association {
+        -String name
+        -String target
+        -String cardinality
+        -List<AttributeMapping> ams
+        +Object getter()
+        +void setter(object)
+    }
+
+    class AttributeMapping {
+        -String source
+        -String target
+        +Object getter()
+        +void setter(object)
+    }
+
+    BrmSuffix <|-- BrmVocabularySuffix
+    BrmBody <|- BrmVocabulary
+
+    Association "0..*" - "1" AttributeMapping
+
+    DataObject "1..*" - "1..*" Attribute
+    DataObject "0..*" -- "1" Association
+
+    BrmVocabularyContent "1" - "1" DataObject
+    BrmVocabulary "1" - "1" BrmVocabularyMetadata
+    BrmVocabulary "1" -- "1" BrmVocabularyContent
+
+
+}
+
+package com.sap.csc.poc.ems.service.brm.dto.decisiontable {
+
+        class BrmDecisionTableSuffix {
+            -String packageId
+            -String objectName
+            -String objectSuffix
+            -String status
+            +Object getter()
+            +void setter(object)
+            +String getSuffix()
+        }
+
+        class BrmDecisionTable {
+            -BrmDecisionTableMetadata metadata
+            -BrmDecisionTableContent content
+            +Object getter()
+            +void setter(object)
+            +String getEntireName()
+        }
+
+
+        class BrmDecisionTableContent {
+            -String name
+            -String description
+            -String status
+            -RuleBody ruleBody
+            -String vocabulary
+            -String output
+            +Object getter()
+            +void setter(object)
+        }
+
+        class RuleBody {
+            -String type;
+            -String hitPolicy
+            -RuleBodyContent content
+            +Object getter()
+            +void setter(object)
+        }
+
+
+        class RuleBodyContent {
+           -List<RuleBodyHeader> headers
+		   -List<RuleBodyRow> rows
+           +Object getter()
+           +void setter(object)
+        }
+
+        class RuleBodyHeader {
+            -String colID
+            #String type
+            -String name
+            -String expression
+            -String alias
+            #Integer width
+            +Object getter()
+            +void setter(object)
+        }
+
+        class RuleBodyRow {
+            -String rowID
+            -List<RowItem> rowItems
+            +Object getter()
+            +void setter(object)
+        }
+
+        class RowItem {
+            -String colID
+            -String content
+            -String span
+            +Object getter()
+            +void setter(object)
+        }
+
+        BrmBody <|- BrmDecisionTable
+        BrmSuffix <|-- BrmDecisionTableSuffix
+
+        BrmDecisionTable "1" - "1" BrmDecisionTableMetadata
+        BrmDecisionTable "1" - "1" BrmDecisionTableContent
+
+        BrmDecisionTableContent "1" -- "1" RuleBody
+        RuleBodyContent "1" - "1" RuleBody
+
+        RuleBodyHeader "1..*"-"1" RuleBodyContent
+        RuleBodyContent "1..*"--"1" RuleBodyRow
+        RowItem "1"-"1..*" RuleBodyRow
+
+}
+
+
+package com.sap.csc.poc.ems.service.brm.config.http {
+
+    interface HttpContextConfig {
+        +{static} Collection<Header> defaultHeaders()
+        +{static} Map<String, HttpHost> proxyHosts()
+        +CookieStore cookieStore();
+        +CredentialsProvider credentialsProvider()
+        +DnsResolver dnsResolver()
+        +SSLContext sslContext()
+        +RequestConfig requestConfig()
+    }
+
+    class BasicHttpContextConfig {
+        -List<Header> defaultHeaders
+        -Map<String, HttpHost> proxyHosts
+        #BrmPropertyHolder brmPropertyHolder
+        #BrmProxyConfig brmProxyConfig
+        +void initial()
+        +CookieStore cookieStore();
+        +CredentialsProvider credentialsProvider()
+        +DnsResolver dnsResolver()
+        +SSLContext sslContext()
+        +RequestConfig requestConfig()
+        #void extractFromLocalEnv(Builder)
+        #String getBasicHeader()
+    }
+
+    HttpContextConfig <|- BasicHttpContextConfig
+}
+
+
+package com.sap.csc.poc.ems.service.brm.config.property {
+
+    class BrmPropertyHolder {
+        #AuthenticationConfig authentication
+        #UriConfig uri
+        +Object getter()
+        +void setter(object)
+    }
+
+    class AuthenticationConfig {
+        #String mode
+        #String basicToken
+        #String username
+        #String password
+        +Object getter()
+        +void setter(object)
+    }
+
+    class UriConfig {
+        #RepositoryUri repository
+        #ExecutionUri execution
+        +Object getter()
+        +void setter(object)
+    }
+
+    class RepositoryUri {
+        #String root
+        #String csrf
+        +Object getter()
+        +void setter(object)
+    }
+
+    class ExecutionUri {
+        #String root
+        #String csrf
+        +Object getter()
+        +void setter(object)
+    }
+
+    BrmPropertyHolder -- AuthenticationConfig
+    BrmPropertyHolder -- UriConfig
+    UriConfig -- RepositoryUri
+    ExecutionUri -- UriConfig
+
+}
+
+
+package com.sap.csc.poc.ems.service.brm.config.proxy {
+
+    class BrmProxyConfig {
+        #HttpProxyConfig httpProxyConfig
+        #HttpsProxyConfig httpsProxyConfig
+        +Object getter()
+        +void setter(object)
+    }
+
+    class HttpProxyConfig {
+        #String host
+        #Integer port
+        +Object getter()
+        +void setter(object)
+    }
+
+    class HttpsProxyConfig {
+        #String host
+        #Integer port
+        +Object getter()
+        +void setter(object)
+    }
+
+    BrmProxyConfig - HttpProxyConfig
+    HttpsProxyConfig - BrmProxyConfig
+}
+
+BrmPropertyHolder -- HttpContextConfig
+BrmProxyConfig -- HttpContextConfig
+
+
+package com.sap.csc.poc.ems.service.brm.config.web {
+
+    class HttpApiService {
+        -{static} int[] HIDDEN_PORTS
+        #Logger logger
+        -HttpSession httpSession
+        -HttpServletRequest httpServletRequest
+        -HttpServletResponse httpServletResponse
+        +Object getter()
+        +void setter(object)
+    }
+
+    class WebConfig {
+        +FilterRegistrationBean corsFilterRegistration()
+    }
+
+}
+
+HttpSession - HttpApiService
+HttpServletRequest - HttpApiService
+httpServletResponse - HttpApiService
+
+
+package com.sap.csc.poc.ems.service.brm.client {
+
+    class BrmRepositoryClient {
+        #RepositoryUri repositoryUri
+        #ObjectMapper objectMapper
+        #String DESIGN_TIME_REPO
+        #String DESIGN_TIME_REPO_ACTIVATE
+        #{static}String OBJECT_NAME_TEMPLATE
+        +void init()
+        +String retrieve(String,String)
+        +Pair<HttpStatus,String> create(SpecBody)
+        +Pair<HttpStatus,String> update(SpecBody)
+        +Pair<HttpStatus, String> delete(String,String)
+        +Pair<HttpStatus, String> activate(String,String)
+    }
+
+    class BrmExecutionClient {
+        #ExecutionUri executionUri
+        +String invoke(String,String)
+    }
+
+}
+
+
+BrmRepositoryClient - ObjectMapper
+RepositoryUri - BrmRepositoryClient
+ExecutionUri - BrmExecutionClient
+
+
+package com.sap.csc.poc.ems.service.brm.client.template {
+
+    class MightyRestTemplate {
+        #{static}ThreadLocal<RestTemplate> restTemplateLocal
+        #{static}ThreadLocal<AsyncRestTemplate> asyncRestTemplateLocal
+        -RestTemplate restTemplate
+        -AsyncRestTemplate asyncRestTemplate
+        #EvictClutterHeadersInterceptor evictClutterHeadersInterceptor
+        #JsonContentTypeInterceptor jsonContentTypeInterceptor
+        #CacheXsrfTokenInterceptor cacheXsrfTokenInterceptor
+        #IgnoreResponseErrorHandler errorHandler
+        #HttpComponentsClientHttpRequestFactory clientHttpRequestFactory
+        #HttpComponentsAsyncClientHttpRequestFactory asyncClientHttpRequestFactory
+        +void setClientHttpRequestFactory(HttpComponentsClientHttpRequestFactory)
+        +void setAsyncClientHttpRequestFactory(HttpComponentsAsyncClientHttpRequestFactory)
+        +void initial()
+        -void initialRestTemplate()
+        -void initialAsyncRestTemplate()
+        +RestTemplate getRestTemplate()
+        +AsyncRestTemplate getAsyncRestTemplate()
+
+    }
+
+    class CsrfRestTemplate {
+        +void initial()
+    }
+    CsrfRestTemplate -|> MightyRestTemplate
+
+
+}
+
+MightyRestTemplate - RestTemplate
+MightyRestTemplate - AsyncRestTemplate
+
+
+interface ClientHttpRequestInterceptor
+interface AsyncClientHttpRequestInterceptor
+
+
+package com.sap.csc.poc.ems.service.brm.client.interceptor {
+
+    class EvictClutterHeadersInterceptor {
+        +ClientHttpResponse intercept(HttpRequest,byte[],ClientHttpRequestExecution)
+        +ListenableFuture<ClientHttpResponse> intercept(HttpRequest,byte[],AsyncClientHttpRequestExecution)
+        -void evictClutterHeaders(HttpRequest)
+    }
+
+    class JsonContentTypeInterceptor {
+        +ClientHttpResponse intercept(HttpRequest,byte[],ClientHttpRequestExecution)
+        +ListenableFuture<ClientHttpResponse> intercept(HttpRequest,byte[],AsyncClientHttpRequestExecution)
+        -void addJsonHeaders(HttpRequest)
+    }
+
+    class CacheXsrfTokenInterceptor {
+    	#CsrfRestTemplate csrfRestTemplate
+    	#BrmPropertyHolder brmPropertyHolder
+    	-ConcurrentHashMap<String, Pair<String, Calendar>> csrfTokenMap
+    	-{static}String X_CSRF_TOKEN
+        +ClientHttpResponse intercept(HttpRequest,byte[],ClientHttpRequestExecution)
+        +ListenableFuture<ClientHttpResponse> intercept(HttpRequest,byte[],AsyncClientHttpRequestExecution)
+        -void addCsrfHeaders((HttpRequest)
+        -void addBasicAuthHeader(HttpRequest)
+        -String getCsrfToken(String)
+        -String getDesignTimeXsrfToken()
+        -String getRunTimeCsrfToken()
+        -Date getExpirationTime()
+    }
+
+    EvictClutterHeadersInterceptor --|> ClientHttpRequestInterceptor
+    EvictClutterHeadersInterceptor -|> AsyncClientHttpRequestInterceptor
+
+    JsonContentTypeInterceptor --|> ClientHttpRequestInterceptor
+    JsonContentTypeInterceptor -|> AsyncClientHttpRequestInterceptor
+
+    CacheXsrfTokenInterceptor --|> ClientHttpRequestInterceptor
+    CacheXsrfTokenInterceptor -|> AsyncClientHttpRequestInterceptor
+
+}
+
+MightyRestTemplate . EvictClutterHeadersInterceptor
+MightyRestTemplate . JsonContentTypeInterceptor
+MightyRestTemplate . CacheXsrfTokenInterceptor
+
+BrmRepositoryClient -|> MightyRestTemplate
+BrmExecutionClient -|> MightyRestTemplate
+
+
+package com.sap.csc.poc.ems.service.brm.client.factory {
+
+    class AbstractHttpContext {
+        -CookieStore cookieStore;
+        -CredentialsProvider credentialsProvider;
+        -DnsResolver dnsResolver;
+        -SSLContext sslContext;
+        -RequestConfig requestConfig;
+        #{static} String HTTPS
+        #{static} String HTTP
+        +Object getter()
+        +void setter(object)
+    }
+
+    BasicHttpContextConfig . AbstractHttpContext
+}
+
+
+package com.sap.csc.poc.ems.service.brm.client.factory.sync {
+
+    interface AbstractHttpClientsFactory {
+        +RegistryBuilder<ConnectionSocketFactory> registryBuilder()
+        +PoolingHttpClientConnectionManager connectionManager(RegistryBuilder<ConnectionSocketFactory>)
+        +HttpClientBuilder httpClientBuilder(HttpClientConnectionManager)
+        +HttpComponentsClientHttpRequestFactory clientHttpRequestFactory(HttpClientBuilder)
+    }
+
+    class HttpClientsFactory {
+        -BasicHttpContextConfig basicHttpContextConfig
+        +PoolingHttpClientConnectionManager connectionManager(RegistryBuilder<ConnectionSocketFactory>)
+        +HttpClientBuilder httpClientBuilder(HttpClientConnectionManager)
+        +HttpComponentsClientHttpRequestFactory clientHttpRequestFactory(HttpClientBuilder)
+    }
+
+    AbstractHttpContext <|- HttpClientsFactory
+    HttpClientsFactory --|> AbstractHttpClientsFactory
+    BasicHttpContextConfig . HttpClientsFactory
+}
+
+
+package com.sap.csc.poc.ems.service.brm.client.factory.async {
+
+    interface AbstractAsyncHttpClientsFactory {
+        +ConnectingIOReactor connectingIOReactor()
+        +NHttpConnectionFactory<ManagedNHttpClientConnection> nioHttpConnectionFactory()
+        +ConnectionConfig connectionConfig()
+        +Registry<SchemeIOSessionStrategy> sessionStrategyRegistry()
+        +PoolingNHttpClientConnectionManager nHttpClientConnectionManager(
+           NHttpConnectionFactory<ManagedNHttpClientConnection>,Registry<SchemeIOSessionStrategy>)
+        +HttpAsyncClientBuilder httpAsyncClientBuilder(NHttpClientConnectionManager)
+        +HttpComponentsAsyncClientHttpRequestFactory asyncClientHttpRequestFactory(
+                HttpAsyncClientBuilder)
+    }
+
+    class AsyncHttpClientsFactory {
+        -BasicHttpContextConfig basicHttpContextConfig
+        +ConnectingIOReactor connectingIOReactor()
+        +NHttpConnectionFactory<ManagedNHttpClientConnection> nioHttpConnectionFactory()
+        +ConnectionConfig connectionConfig()
+        +Registry<SchemeIOSessionStrategy> sessionStrategyRegistry()
+        +PoolingNHttpClientConnectionManager nHttpClientConnectionManager(
+           NHttpConnectionFactory<ManagedNHttpClientConnection>,Registry<SchemeIOSessionStrategy>)
+        +HttpAsyncClientBuilder httpAsyncClientBuilder(NHttpClientConnectionManager)
+        +HttpComponentsAsyncClientHttpRequestFactory asyncClientHttpRequestFactory(
+                HttpAsyncClientBuilder)
+    }
+
+    AbstractHttpContext <|- AsyncHttpClientsFactory
+    AsyncHttpClientsFactory --|> AbstractAsyncHttpClientsFactory
+    BasicHttpContextConfig . AsyncHttpClientsFactory
+
+}
+
+class ObjectMapper
+
+package com.sap.csc.poc.ems.service.brm.rest.alpha.basic {
+
+    interface BrmVocabularyService {
+        +String retrieve(String)
+        +Pair<HttpStatus, String> create(String)
+        +Pair<HttpStatus, String> update(String)
+        +Pair<HttpStatus, String> delete(String)
+        +Pair<HttpStatus, String> activate(String)
+    }
+
+    interface BrmDecisionTableService {
+        +String retrieve(String)
+        +Pair<HttpStatus, String> create(String)
+        +Pair<HttpStatus, String> update(String)
+        +Pair<HttpStatus, String> delete(String)
+        +Pair<HttpStatus, String> activate(String)
+    }
+
+    interface BrmExecutionService {
+        +String execute(String,String)
+    }
+
+}
+
+package com.sap.csc.poc.ems.service.brm.rest.alpha.basic.impl {
+
+    class BrmVocabularyServiceImpl {
+        -BrmVocabularySuffix brmVocabularySuffix
+        -BrmRepositoryClient brmRepositoryClient
+        -ObjectMapper objectMapper
+        +String retrieve(String)
+        +Pair<HttpStatus, String> create(String)
+        +Pair<HttpStatus, String> update(String)
+        +Pair<HttpStatus, String> delete(String)
+        +Pair<HttpStatus, String> activate(String)
+    }
+
+    HttpApiService <|-- BrmVocabularyServiceImpl
+    BrmVocabularyServiceImpl -|> BrmVocabularyService
+    BrmVocabularyServiceImpl - BrmRepositoryClient
+    BrmVocabularyServiceImpl - BrmVocabularySuffix
+
+    ObjectMapper - BrmVocabularyServiceImpl
+
+    class BrmDecisionTableServiceImpl {
+        -BrmDecisionTableSuffix brmDecisionTableSuffix
+        -BrmRepositoryClient brmRepositoryClient
+        -ObjectMapper objectMapper
+        +String retrieve(String)
+        +Pair<HttpStatus, String> create(String)
+        +Pair<HttpStatus, String> update(String)
+        +Pair<HttpStatus, String> delete(String)
+        +Pair<HttpStatus, String> activate(String)
+    }
+
+    HttpApiService <|-- BrmDecisionTableServiceImpl
+    BrmDecisionTableServiceImpl -|> BrmDecisionTableService
+    BrmDecisionTableServiceImpl - BrmRepositoryClient
+    BrmDecisionTableServiceImpl - BrmDecisionTableSuffix
+
+
+    ObjectMapper - BrmDecisionTableServiceImpl
+
+    class BrmExecutionServiceImpl {
+        -BrmExecutionClient brmExecutionClient
+        +String execute(String,String)
+    }
+
+    HttpApiService <|-- BrmExecutionServiceImpl
+    BrmExecutionServiceImpl -|> BrmExecutionService
+    BrmExecutionServiceImpl - BrmExecutionClient
+
+}
+
+@enduml
