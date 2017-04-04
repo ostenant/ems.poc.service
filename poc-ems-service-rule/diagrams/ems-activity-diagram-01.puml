@@ -1,0 +1,89 @@
+@startuml
+start
+
+:Create Request;
+
+if (Authentication Ok?) then (true)
+:SSO Authentication;
+
+else (false)
+stop
+endif
+
+if (Authorization Ok?) then (false)
+stop
+else (true)
+:User Authorization;
+endif
+
+if (Validate Request) then (true)
+split
+:Parse SO Metadata;
+fork
+:Parse Customer;
+:Save Customer;
+
+fork again
+:Parse Products;
+:Save Products;
+
+endfork
+
+:Fetch metadata;
+
+split again
+:Trigger Rule Service;
+
+fork
+:Split SO;
+:Flatten SO;
+:Merge SO;
+fork again
+
+:Parse Rule Service;
+
+endfork
+
+if (Not Created) then (true)
+:Create;
+
+split
+:Create Rule Project;
+split again
+:Create Rule Service;
+end split
+
+split
+:Create Rule Set;
+:Bind Rules;
+split again
+:Create Rule;
+:Create DataObject;
+:Create DecisionTable;
+split again
+
+end split
+
+else (false)
+:Fetch;
+endif
+
+:Execute Rule Service;
+split
+:Keep Execution Logs;
+split again
+if (First Match) then (true)
+:Parse rule artifacts;
+:Combine rule artifacts;
+else (false)
+:Sign as neglect;
+endif
+
+end split
+end split
+:Generate entitlements;
+:Save entitlements;
+endif
+stop
+
+@enduml

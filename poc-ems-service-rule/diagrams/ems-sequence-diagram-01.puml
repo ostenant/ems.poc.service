@@ -1,0 +1,85 @@
+@startuml
+autonumber
+
+actor 规则管理员 as Admin
+activate BrmCompositeService
+Admin -> BrmCompositeService: Incoming conditions
+...
+BrmCompositeService -> BrmExecutionService: execute
+activate BrmExecutionService
+
+BrmExecutionService -> BrmExecutionClient: invoke
+activate BrmExecutionClient
+
+
+BrmExecutionClient -> BrmExecutionClient: createRequestEntity
+activate BrmExecutionClient
+
+BrmExecutionClient -> MightyRestTemplate: getAsyncRestTemplate
+activate MightyRestTemplate
+
+MightyRestTemplate -> MightyRestTemplate: initialAsyncRestTemplate
+activate MightyRestTemplate
+
+MightyRestTemplate --> AsyncRestTemplate: getAsyncRestTemplateLocal
+
+activate AsyncRestTemplate
+AsyncRestTemplate --> AsyncRestTemplate: setAsyncRequestFactory
+
+
+AsyncRestTemplate --> AsyncRestTemplate: addInterceptors
+activate AsyncRestTemplate
+note right: \n EvictClutterHeadersInterceptor \n JsonContentTypeInterceptor \n CacheXsrfTokenInterceptor
+deactivate AsyncRestTemplate
+
+AsyncRestTemplate --> AsyncRestTemplate: addErrorHandler
+activate AsyncRestTemplate
+note right: \n IgnoreResponseErrorHandler
+deactivate AsyncRestTemplate
+
+AsyncRestTemplate --> MightyRestTemplate: AsyncRestTemplate
+
+MightyRestTemplate --> MightyRestTemplate: get
+deactivate MightyRestTemplate
+
+MightyRestTemplate --> BrmExecutionClient: AsyncRestTemplate
+deactivate MightyRestTemplate
+
+deactivate BrmExecutionClient
+
+activate AsyncRestTemplate
+BrmExecutionClient -> AsyncRestTemplate: exchange
+activate ListenableFuture
+
+activate BrmExecutionClient
+
+activate AsyncRestTemplate
+AsyncRestTemplate --> ListenableFuture: execute
+ListenableFuture --> AsyncRestTemplate: ListenableFuture
+
+deactivate AsyncRestTemplate
+
+AsyncRestTemplate --> BrmExecutionClient: ListenableFuture
+deactivate AsyncRestTemplate
+
+BrmExecutionClient -> ListenableFuture: addCallback
+
+deactivate BrmExecutionClient
+
+BrmExecutionClient -> ListenableFuture: getFuture
+activate BrmExecutionClient
+...
+...
+ListenableFuture --> BrmExecutionClient: ResponseBody
+deactivate ListenableFuture
+
+BrmExecutionClient --> BrmExecutionService: ResponseBody
+deactivate BrmExecutionClient
+
+BrmExecutionService --> BrmCompositeService: ResponseBody
+deactivate BrmExecutionService
+
+BrmCompositeService --> Admin
+deactivate BrmCompositeService
+...
+@enduml

@@ -20,6 +20,34 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/test
+  mail: # Email
+    host: smtp.163.com
+    port: 25
+    username: ostenant@163.com
+    password: ostenant163
+    properties: 
+      mail:
+        smtp:
+          auth: true
+          starttls: 
+            enable: true
+            required: true
+          socketFactory: 
+            class: javax.net.ssl.SSLSocketFactory
+    scheduler:
+      enabled: true
+      priorityLevels: 5
+      persistence:
+        enabled: true
+        redis: 
+          enabled: true
+          embedded: true
+          host: localhost
+          port: 6381
+          settings: appendfilename email_appendonly.aof, dir D:/Workspace/RedisCache
+        desiredBatchSize: 40
+        minKeptInMemory: 20
+        maxKeptInMemory: 50
       
 # Eureka specifics 
 
@@ -35,6 +63,7 @@ eureka:
 ribbon:
   eureka:
    enabled: true
+   
 
 # Local Proxy
 local: 
