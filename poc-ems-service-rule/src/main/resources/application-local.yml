@@ -25,28 +25,49 @@ spring:
     port: 25
     username: ostenant@163.com
     password: ostenant163
-    properties:
-      smtp: 
-        auth: true
-        starttls: 
-          enable: true
-          required: true
-        socketFactory: 
-          class: javax.net.ssl.SSLSocketFactory
-    scheduler: 
+    properties: 
+      mail:
+        smtp:
+          auth: true
+          starttls: 
+            enable: true
+            required: true
+          socketFactory: 
+            class: javax.net.ssl.SSLSocketFactory
+    scheduler:
       enabled: true
       priorityLevels: 5
-      persistence: 
+      persistence:
         enabled: true
         redis: 
           enabled: true
           embedded: true
           host: localhost
           port: 6381
-          settings: appendfilename email_appendonly.aof, dir C:/Workspace/RedisCache
+          settings: appendfilename email_appendonly.aof, dir D:/Workspace/RedisCache
         desiredBatchSize: 40
         minKeptInMemory: 20
         maxKeptInMemory: 50
+#    logging: 
+#      enabled: true
+#      strategy: 
+#        from: PLAIN_TEXT
+#        replyTo: HIDDEN
+#        to: FULL_TEXT_FROM_COMMERCIAL_AT
+#        cc: HIDDEN
+#        bcc: HIDDEN
+#        subject: PLAIN_TEXT
+#        body: FIRST_DOZEN_THEN_STARS
+#        attachments: HIDDEN
+#        encoding: HIDDEN
+#        locale: HIDDEN
+#        sentAt: STANDARD_DATE_FORMAT_WITH_ZONE_ID
+#        receiptTo: HIDDEN
+#        depositionNotificationTo: HIDDEN
+#        ignore: 
+#          customHeaders: true
+#          nullAndEmptyCollections: true
+   
       
 # Eureka specifics 
 

@@ -14,7 +14,8 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.3.RELEASE</version>
+		<version>1.5.2.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<modules>
@@ -33,7 +34,7 @@
 		<module>poc-ems-persistence</module>
 		<module>poc-ems-model</module>
 		<module>poc-ems-infrastructure</module>
-    <module>poc-ems-service-rule</module>
+        <module>poc-ems-service-rule</module>
   </modules>
 
 	<dependencies>
@@ -45,13 +46,13 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>Brixton.SR7</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
+	        <dependency>
+	            <groupId>org.springframework.cloud</groupId>
+	            <artifactId>spring-cloud-dependencies</artifactId>
+	            <version>Camden.SR6</version>
+	            <type>pom</type>
+	            <scope>import</scope>
+	        </dependency>
 			<dependency>
 				<groupId>io.spring.platform</groupId>
 				<artifactId>platform-bom</artifactId>

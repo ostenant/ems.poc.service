@@ -67,7 +67,7 @@ public class ScheduleThymeleafEmailService {
 	 */
 	public void scheduleMimeEmail(MimeEmailBox mimeEmailBox, OffsetDateTime scheduleTime) {
 		// Check email destination
-		Preconditions.checkArgument(CollectionUtils.isEmpty(mimeEmailBox.getConspirators()),
+		Preconditions.checkArgument(CollectionUtils.isNotEmpty(mimeEmailBox.getConspirators()),
 				"Email receiver is not in presence");
 
 		// Sending to all conspirators

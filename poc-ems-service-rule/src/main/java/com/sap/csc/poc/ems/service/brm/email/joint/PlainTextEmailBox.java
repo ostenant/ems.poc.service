@@ -23,12 +23,12 @@ public class PlainTextEmailBox implements Serializable {
 	/**
 	 * Email subject
 	 */
-	protected String subject;
+	protected String subject = "";
 
 	/**
 	 * Email body
 	 */
-	protected String body;
+	protected String body = "";
 
 	/**
 	 * Email charset

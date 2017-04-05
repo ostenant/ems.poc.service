@@ -81,14 +81,14 @@
 		<dependency>
 		    <groupId>it.ozimov</groupId>
 		    <artifactId>spring-boot-email-core</artifactId>
-		    <version>0.5.3</version>
+		    <version>0.5.1</version>
 		</dependency> 
 		
 		<!-- Template -->
 		<dependency>
 		    <groupId>it.ozimov</groupId>
 		    <artifactId>spring-boot-thymeleaf-email</artifactId>
-		    <version>0.5.3</version>
+		    <version>0.5.1</version>
 		</dependency>
 		
 		<!-- JDK 8 Lambda -->
@@ -98,6 +98,12 @@
 			<version>0.9.12</version>
 		</dependency>
 		
+		<dependency>
+		    <groupId>com.google.guava</groupId>
+		    <artifactId>guava</artifactId>
+		    <version>21.0</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
@@ -105,6 +111,10 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+					<configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
 				<dependencies>
 					<dependency>
 						<groupId>org.springframework</groupId>
