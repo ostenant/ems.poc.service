@@ -29,7 +29,7 @@ public class Conspirator extends Originator implements Serializable {
 		this.priority = priority;
 	}
 
-	public int getPriority() {
+	public Integer getPriority() {
 		return priority;
 	}
 

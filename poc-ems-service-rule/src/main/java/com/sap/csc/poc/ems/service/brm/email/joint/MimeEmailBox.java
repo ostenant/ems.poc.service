@@ -1,6 +1,5 @@
 package com.sap.csc.poc.ems.service.brm.email.joint;
 
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +7,8 @@ import java.util.Map;
 public class MimeEmailBox extends PlainTextEmailBox {
 
 	private static final long serialVersionUID = -7876719465987547204L;
+
+	public static final String DEFAULT_ENCCODING = "UTF-8";
 
 	/**
 	 * Static template file name
@@ -22,7 +23,7 @@ public class MimeEmailBox extends PlainTextEmailBox {
 	/**
 	 * Schedule time
 	 */
-	protected OffsetDateTime when;
+	protected Long when;
 
 	/**
 	 * Schedule properties
@@ -39,11 +40,11 @@ public class MimeEmailBox extends PlainTextEmailBox {
 	 */
 	private List<MimeEmailInlinePicture> mimeEmailPictures = new ArrayList<MimeEmailInlinePicture>();
 
-	public OffsetDateTime getWhen() {
+	public Long getWhen() {
 		return when;
 	}
 
-	public void setWhen(OffsetDateTime when) {
+	public void setWhen(Long when) {
 		this.when = when;
 	}
 

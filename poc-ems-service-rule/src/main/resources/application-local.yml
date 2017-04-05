@@ -44,7 +44,7 @@ spring:
           embedded: true
           host: localhost
           port: 6381
-          settings: appendfilename email_appendonly.aof, dir D:/Workspace/RedisCache
+          settings: appendfilename email_appendonly.aof, dir C:/Workspace/RedisCache
         desiredBatchSize: 40
         minKeptInMemory: 20
         maxKeptInMemory: 50

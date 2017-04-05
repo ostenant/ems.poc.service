@@ -35,7 +35,7 @@ public class SimpleMimeEmailWithThymeleafApplication implements ApplicationConte
 		simpleThymeleafEmailService.sendMimeEmailWithThymeleaf();
 
 		// Close context 10 seconds later than sending email
-		// close();
+		close();
 	}
 
 	public void close() {

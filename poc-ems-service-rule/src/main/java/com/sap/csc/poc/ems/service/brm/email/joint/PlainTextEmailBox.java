@@ -8,7 +8,7 @@ public class PlainTextEmailBox implements Serializable {
 
 	private static final long serialVersionUID = -5474202094868757525L;
 
-	protected static final String DEFAULT_ENCCODING = "UTF-8";
+	public static final String DEFAULT_ENCCODING = "UTF-8";
 
 	/**
 	 * Email sender
