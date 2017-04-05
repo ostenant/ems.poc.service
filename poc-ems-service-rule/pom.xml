@@ -81,14 +81,14 @@
 		<dependency>
 		    <groupId>it.ozimov</groupId>
 		    <artifactId>spring-boot-email-core</artifactId>
-		    <version>0.5.1</version>
+		    <version>0.5.3</version>
 		</dependency> 
 		
 		<!-- Template -->
 		<dependency>
 		    <groupId>it.ozimov</groupId>
 		    <artifactId>spring-boot-thymeleaf-email</artifactId>
-		    <version>0.5.1</version>
+		    <version>0.5.3</version>
 		</dependency>
 		
 		<!-- JDK 8 Lambda -->

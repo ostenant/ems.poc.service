@@ -20,24 +20,23 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/test
-  mail: # Email
+  mail:
     host: smtp.163.com
     port: 25
     username: ostenant@163.com
     password: ostenant163
-    properties: 
-      mail:
-        smtp:
-          auth: true
-          starttls: 
-            enable: true
-            required: true
-          socketFactory: 
-            class: javax.net.ssl.SSLSocketFactory
-    scheduler:
+    properties:
+      smtp: 
+        auth: true
+        starttls: 
+          enable: true
+          required: true
+        socketFactory: 
+          class: javax.net.ssl.SSLSocketFactory
+    scheduler: 
       enabled: true
       priorityLevels: 5
-      persistence:
+      persistence: 
         enabled: true
         redis: 
           enabled: true
