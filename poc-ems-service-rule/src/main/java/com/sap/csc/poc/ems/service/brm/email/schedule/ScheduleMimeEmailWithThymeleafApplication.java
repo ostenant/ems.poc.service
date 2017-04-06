@@ -51,14 +51,14 @@ public class ScheduleMimeEmailWithThymeleafApplication implements ApplicationCon
 		mimeEmailBox.setOriginator(originator);
 		// Email receivers
 		List<Conspirator> conspirators = Lists.newArrayList( //
-				new Conspirator("ostenant@163.com", "Ostenant"), //
-				new Conspirator("Vincent.chen01@sap.com", "Vincent", 1));
+				new Conspirator("ostenant@163.com", "Ostenant", 1));//
+		// new Conspirator("Vincent.chen01@sap.com", "Vincent", 1));
 		mimeEmailBox.setConspirators(conspirators);
 
 		// Schedule priority
 		// mimeEmailBox.setPriority(1);
 		// Schedule time
-		mimeEmailBox.setWhen(30L);
+		mimeEmailBox.setWhen(2L);
 
 		// Email template path
 		mimeEmailBox.setTemplateName("templates/emailTemplate.html");

@@ -44,7 +44,7 @@ spring:
           embedded: true
           host: localhost
           port: 6381
-          settings: appendfilename email_appendonly.aof, dir D:/Workspace/RedisCache
+          settings: appendfilename email_appendonly.aof, dir C:/Workspace/RedisCache
         desiredBatchSize: 40
         minKeptInMemory: 20
         maxKeptInMemory: 50
@@ -71,12 +71,12 @@ spring:
       
 # Eureka specifics 
 
-eureka:
-  instance:
-    hostname: localhost
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+#eureka:
+#  instance:
+#    hostname: localhost
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8761/eureka/
       
 # Ribbon specifics 
 
