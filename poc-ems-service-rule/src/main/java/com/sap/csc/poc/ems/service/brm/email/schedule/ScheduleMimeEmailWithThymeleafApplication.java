@@ -16,6 +16,8 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -27,7 +29,7 @@ import it.ozimov.springboot.mail.service.exception.CannotSendEmailException;
 
 @Configuration
 @Order(2)
-// @EnableAsync
+@EnableAsync
 public class ScheduleMimeEmailWithThymeleafApplication implements ApplicationContextAware {
 
 	@Autowired
@@ -51,12 +53,12 @@ public class ScheduleMimeEmailWithThymeleafApplication implements ApplicationCon
 		mimeEmailBox.setOriginator(originator);
 		// Email receivers
 		List<Conspirator> conspirators = Lists.newArrayList( //
-				new Conspirator("ostenant@163.com", "Ostenant", 1));//
+				new Conspirator("vincent.chen01@sap.com", "Vincent", 1));//
 		// new Conspirator("Vincent.chen01@sap.com", "Vincent", 1));
 		mimeEmailBox.setConspirators(conspirators);
 
 		// Schedule priority
-		// mimeEmailBox.setPriority(1);
+		mimeEmailBox.setPriority(1);
 		// Schedule time
 		mimeEmailBox.setWhen(2L);
 
@@ -66,8 +68,9 @@ public class ScheduleMimeEmailWithThymeleafApplication implements ApplicationCon
 		Map<String, Object> modelObject = ImmutableMap.of(//
 				"name", "Vincent", //
 				"gender", "先生", //
-				"account", "Vincent.chen01@sap.com", //
+				"account", "vincent.chen01@sap.com", //
 				"title", "赚多多");
+
 		mimeEmailBox.setModelObject(modelObject);
 
 		// Email attachments
@@ -81,7 +84,7 @@ public class ScheduleMimeEmailWithThymeleafApplication implements ApplicationCon
 		close();
 	}
 
-	// @Async
+	@Async
 	private void close() {
 		TimerTask shutdownTask = new TimerTask() {
 			@Override

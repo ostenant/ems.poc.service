@@ -48,25 +48,25 @@ spring:
         desiredBatchSize: 40
         minKeptInMemory: 20
         maxKeptInMemory: 50
-#    logging: 
-#      enabled: true
-#      strategy: 
-#        from: PLAIN_TEXT
-#        replyTo: HIDDEN
-#        to: FULL_TEXT_FROM_COMMERCIAL_AT
-#        cc: HIDDEN
-#        bcc: HIDDEN
-#        subject: PLAIN_TEXT
-#        body: FIRST_DOZEN_THEN_STARS
-#        attachments: HIDDEN
-#        encoding: HIDDEN
-#        locale: HIDDEN
-#        sentAt: STANDARD_DATE_FORMAT_WITH_ZONE_ID
-#        receiptTo: HIDDEN
-#        depositionNotificationTo: HIDDEN
-#        ignore: 
-#          customHeaders: true
-#          nullAndEmptyCollections: true
+    logging: 
+      enabled: true
+      strategy: 
+        from: PLAIN_TEXT
+        replyTo: HIDDEN
+        to: FULL_TEXT_FROM_COMMERCIAL_AT
+        cc: HIDDEN
+        bcc: HIDDEN
+        subject: PLAIN_TEXT
+        body: FIRST_DOZEN_THEN_STARS
+        attachments: HIDDEN
+        encoding: HIDDEN
+        locale: HIDDEN
+        sentAt: STANDARD_DATE_FORMAT_WITH_ZONE_ID
+        receiptTo: HIDDEN
+        depositionNotificationTo: HIDDEN
+        ignore: 
+          customHeaders: true
+          nullAndEmptyCollections: true
    
       
 # Eureka specifics 
