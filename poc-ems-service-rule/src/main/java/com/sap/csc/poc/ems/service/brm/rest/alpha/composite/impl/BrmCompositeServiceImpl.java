@@ -94,7 +94,6 @@ public class BrmCompositeServiceImpl extends HttpApiService implements BrmCompos
 			@ApiImplicitParam(name = "executionBody", paramType = "body", value = "Conditions combination", required = true, dataType = "JsonArray") })
 	@RequestMapping(value = "rule/execution", method = RequestMethod.POST)
 	public String invoke(@RequestParam("ruleName") String ruleName, @RequestBody String executionBody) {
-		// TODO
 		return brmExecutionService.execute(ruleName, executionBody);
 	}
 
