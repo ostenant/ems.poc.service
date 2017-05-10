@@ -1,15 +1,18 @@
 package com.sap.csc.poc.ems.service.brm.rest.alpha.composite;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.sap.csc.poc.ems.service.brm.rest.alpha.composite.fallback.BrmCompositeServiceFallback;
 
 /**
  * @author Vincent Chen
  *
  */
-// @FeignClient(name = "rule-engine-service")
+@FeignClient(name = "rule-engine-service", fallback = BrmCompositeServiceFallback.class)
 @RequestMapping("composite")
 public interface BrmCompositeService {
 
